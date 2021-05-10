@@ -1,0 +1,21 @@
+==================
+Integer
+==================
+
+STOPSIGNAL 9
+
+---
+
+(source_file
+	(stopsignal_instruction))
+
+==================
+Signal name
+==================
+
+STOPSIGNAL SIGKILL
+
+---
+
+(source_file
+	(stopsignal_instruction))

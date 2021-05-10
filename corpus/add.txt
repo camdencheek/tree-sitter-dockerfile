@@ -1,0 +1,27 @@
+==================
+No param
+==================
+
+ADD /src ./dst
+
+---
+
+(source_file
+	(add_instruction
+		(path)
+		(path)))
+
+==================
+With param
+==================
+
+ADD --chown=a:b /src ./dst
+
+---
+
+(source_file
+	(add_instruction
+		(param)
+		(path)
+		(path)))
+

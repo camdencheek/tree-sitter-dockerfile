@@ -1,0 +1,26 @@
+==================
+No group
+==================
+
+USER foo
+
+---
+
+(source_file
+	(user_instruction
+		user: (unquoted_string)))
+
+==================
+With group
+==================
+
+USER foo:bar
+
+---
+
+(source_file
+	(user_instruction
+		user: (unquoted_string)
+		group: (unquoted_string)))
+		
+

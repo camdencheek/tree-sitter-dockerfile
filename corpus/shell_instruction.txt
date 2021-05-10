@@ -1,0 +1,14 @@
+==================
+Simple
+==================
+
+SHELL ["powershell","-command"]
+
+---
+
+(source_file
+	(shell_instruction
+		(string_array
+			(double_quoted_string)
+			(double_quoted_string))))
+

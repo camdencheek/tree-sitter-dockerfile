@@ -1,0 +1,48 @@
+==================
+Single key-value
+==================
+
+LABEL key="value"
+
+---
+
+(source_file
+	(label_instruction
+		(label_pair
+			key: (unquoted_string)
+			value: (double_quoted_string))))
+
+==================
+Multi key-value
+==================
+
+LABEL key.1="value1" key.2="value2"
+
+---
+
+(source_file
+	(label_instruction
+		(label_pair
+			key: (unquoted_string)
+			value: (double_quoted_string))
+		(label_pair
+			key: (unquoted_string)
+			value: (double_quoted_string))))
+
+==================
+Multiline
+==================
+
+LABEL key.1="value1" \
+	  key.2="value2"
+
+---
+
+(source_file
+	(label_instruction
+		(label_pair
+			key: (unquoted_string)
+			value: (double_quoted_string))
+		(label_pair
+			key: (unquoted_string)
+			value: (double_quoted_string))))

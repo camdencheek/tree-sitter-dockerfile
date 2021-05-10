@@ -1,0 +1,68 @@
+==================
+Only image
+==================
+
+FROM testimage
+
+---
+
+(source_file
+	(from_instruction
+		(image_spec)))
+
+==================
+Image with tag
+==================
+
+FROM testimage:tag
+
+---
+
+(source_file
+	(from_instruction
+		(image_spec
+		    (image_tag))))
+
+==================
+Image with digest
+==================
+
+FROM testimage@sha256:skgshlshg
+
+---
+
+(source_file
+	(from_instruction
+		(image_spec
+		    (image_digest))))
+
+==================
+Image with tag and digest
+==================
+
+FROM testimage:tag@sha256:452525
+
+---
+
+(source_file
+	(from_instruction
+		(image_spec
+		    (image_tag)
+		    (image_digest))))
+
+
+==================
+Tag and digest with as
+==================
+
+FROM sourcegraph/alpine:3.12@sha256:ce099fbcd3cf70b338fc4cb2a4e1fa9ae847de21afdb0a849a393b87d94fb174 AS monitoring_builder
+
+---
+
+(source_file
+	(from_instruction
+		(image_spec
+		    (image_tag)
+		    (image_digest))
+		(name)))
+

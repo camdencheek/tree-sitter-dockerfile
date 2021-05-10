@@ -1,0 +1,53 @@
+==================
+Shell command
+==================
+
+RUN echo "test"
+
+---
+
+(source_file
+	(run_instruction
+		(shell_command)))
+
+==================
+Shell command multiline
+==================
+
+RUN echo "test" \
+	"foo" \
+	bar
+
+
+---
+
+(source_file
+	(run_instruction
+		(shell_command)))
+
+==================
+Run with shell empty array
+==================
+
+run []
+
+---
+
+(source_file
+	(run_instruction
+	    (string_array)))
+
+==================
+Run with shell array
+==================
+
+run ["echo", "test"]
+
+---
+
+(source_file
+	(run_instruction
+	    (string_array
+		    (double_quoted_string)
+			(double_quoted_string))))
+

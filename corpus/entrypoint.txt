@@ -1,0 +1,53 @@
+==================
+Shell command
+==================
+
+ENTRYPOINT echo "test"
+
+---
+
+(source_file
+	(entrypoint_instruction
+		(shell_command)))
+
+==================
+Shell command multiline
+==================
+
+ENTRYPOINT echo "test" \
+	"foo" \
+	bar
+
+
+---
+
+(source_file
+	(entrypoint_instruction
+		(shell_command)))
+
+==================
+Run with shell empty array
+==================
+
+ENTRYPOINT []
+
+---
+
+(source_file
+	(entrypoint_instruction
+	    (string_array)))
+
+==================
+Run with shell array
+==================
+
+ENTRYPOINT ["echo", "test"]
+
+---
+
+(source_file
+	(entrypoint_instruction
+	    (string_array
+		    (double_quoted_string)
+			(double_quoted_string))))
+

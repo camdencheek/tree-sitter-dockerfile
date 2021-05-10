@@ -1,0 +1,27 @@
+==================
+Single port
+==================
+
+EXPOSE 80
+
+
+---
+
+(source_file
+	(expose_instruction
+		(expose_port)))
+
+==================
+Multiple ports
+==================
+
+EXPOSE 80 90/tcp 100/udp
+
+
+---
+
+(source_file
+	(expose_instruction
+		(expose_port)
+		(expose_port)
+		(expose_port)))
