@@ -1,5 +1,6 @@
 [ 
-	; "FROM"
+	"FROM"
+	"AS"
 	"RUN"
 	"CMD"
 	"LABEL"
