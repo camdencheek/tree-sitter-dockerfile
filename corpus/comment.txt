@@ -1,0 +1,25 @@
+==================
+Full line comment
+==================
+
+# Test comment
+
+---
+
+(source_file
+	(comment))
+
+==================
+Comment after instruction
+==================
+
+ADD /src ./dst # Test comment
+
+---
+
+(source_file
+	(add_instruction
+		(path)
+		(path))
+	(comment))
+
