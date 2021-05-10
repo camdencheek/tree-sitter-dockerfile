@@ -33,7 +33,7 @@ module.exports = grammar({
 						$.image_spec,
 						optional(seq(
 								alias(/[aA][sS]/, "AS"),
-								$.name,
+								field("as", $.name),
 						)),
 				),
 
@@ -78,6 +78,7 @@ module.exports = grammar({
 						$._non_newline_whitespace,
 						optional($.param),
 						$.path,
+						$._non_newline_whitespace,
 						$.path,
 				),
 
@@ -86,6 +87,7 @@ module.exports = grammar({
 						$._non_newline_whitespace,
 						optional($.param),
 						$.path,
+						$._non_newline_whitespace,
 						$.path,
 				),
 
@@ -103,19 +105,27 @@ module.exports = grammar({
 						$._non_newline_whitespace,
 						choice(
 								$.string_array,
-								repeat1($.path),
+								seq(
+									$.path,
+									repeat(seq($._non_newline_whitespace, $.path)),
+								),
 						),
 				),
 
 				user_instruction: $ => seq(
 						alias(/[uU][sS][eE][rR]/, "USER"),
 						$._non_newline_whitespace,
-						field("user", alias(/[a-z][-a-z0-9_]*/, $.unquoted_string)),
+						field("user", alias($._user_name_group, $.unquoted_string)),
 						optional(seq(
 							token.immediate(":"),
-							field("group", alias(token.immediate(/[a-z][-a-z0-9_]*/), $.unquoted_string)),
+							field("group", alias($._user_name_group, $.unquoted_string)),
 						)),
 				),
+
+				_user_name_group: $ => repeat1(choice(
+					token.immediate(/[a-z][-a-z0-9_]*/),
+					$.env_spec,
+				)),
 
 				workdir_instruction: $ => seq(
 						alias(/[wW][oO][rR][kK][dD][iI][rR]/, "WORKDIR"),
@@ -145,8 +155,13 @@ module.exports = grammar({
 				stopsignal_instruction: $ => seq(
 						alias(/[sS][tT][oO][pP][sS][iI][gG][nN][aA][lL]/, "STOPSIGNAL"),
 						$._non_newline_whitespace,
-						/[A-Z0-9]+/,
+						$._stopsignal_value,
 				),
+
+				_stopsignal_value: $ => repeat1(choice(
+						/[A-Z0-9]+/,
+						$.env_spec,
+				)),
 
 				healthcheck_instruction: $ => seq(
 						alias(/[hH][eE][aA][lL][tT][hH][cC][hH][eE][cC][kK]/, "HEALTHCHECK"),
@@ -166,7 +181,26 @@ module.exports = grammar({
 						$.string_array,
 				),
 				
-				path: $ => /[^-\[][^\s]*/,
+				// path: $ => /[^-\[][^\s]*/,
+				path: $ => seq(
+					choice(
+						/[^-\s]/, // cannot start with a '-' to avoid conflicts with params
+						$.env_spec,
+					),
+					repeat(choice(
+						token.immediate(/[^\s\$]+/),
+						$.env_spec,
+					)),
+				),
+
+				env_spec: $ => seq(
+					'$',
+					repeat1(choice(
+						token.immediate(/[a-zA-Z][a-zA-Z0-9_]*/),
+						seq('{', /[^\}]+/, '}'),
+					))
+				),
+
 
 				env_pair: $ => seq(
 					field("name", alias(/[a-zA-Z][a-zA-Z0-9_]+[a-zA-Z0-9]/, $.unquoted_string)),
@@ -177,12 +211,15 @@ module.exports = grammar({
 					)),
 				),
 
-				expose_port: $ => seq(
-					/\d+/,
-					optional(choice(
-						"/tcp",
-						"/udp",
-					)),
+				expose_port: $ => choice(
+					seq(
+						/\d+/,
+						optional(choice(
+							"/tcp",
+							"/udp",
+						)),
+					),
+					$.env_spec,
 				),
 
 				label_pair: $ => seq(
@@ -195,31 +232,45 @@ module.exports = grammar({
 				),
 
 				image_spec: $ => seq(
-						alias(/[^:@\s]+/, "name"),
+						field("name", $.image_name),
 						seq(
-								optional($.image_tag),
-								optional($.image_digest),
+								field("tag", optional($.image_tag)),
+								field("digest", optional($.image_digest)),
 						),
 				),
 
-				image_tag: $ => token.immediate(seq(
-						":",
-						/[^\s@]+/,
+				image_name: $ => repeat1(choice(
+					token.immediate(/[^:@\s\$]+/),
+					$.env_spec,
 				)),
 
-				image_digest: $ => token.immediate(seq(
-						"@",
-						/[^\s]+/,
-				)),
+				image_tag: $ => seq(
+						token.immediate(":"),
+						repeat1(choice(
+							token.immediate(/[^\s@\$]+/),
+							$.env_spec,
+						))
+				),
+
+				image_digest: $ => seq(
+						token.immediate("@"),
+						repeat1(choice(
+							token.immediate(/[^\s\$]+/),
+							$.env_spec,
+						)),
+				),
 
 				param: $ => seq(
 						"--",
-						field("name", /[a-z][-a-z]*/),
-						"=",
-						field("value", /[^\s]+/),
+						field("name", token.immediate(/[a-z][-a-z]*/)),
+						token.immediate("="),
+						field("value", token.immediate(/[^\s]+/)),
 				),
 
-				name: $ => /[-a-z_]+/,
+				name: $ => repeat1(choice(
+					/[-a-z_]+/,
+					$.env_spec,
+				)),
 
 				string_array: $ => seq(
 						"[",
@@ -231,22 +282,24 @@ module.exports = grammar({
 				),
 
 				shell_command: $ => seq(
-						/[^\[\s].*[^\\\n]/,
+						/[^\[\s].*[^\\\n]/, // TODO allow escape sequences
 						repeat(seq("\\\n", /.*[^\\\n]/)),
 				),
 
 				double_quoted_string: $ => seq(
 						'"',
 						repeat(choice(
-								token.immediate(prec(1, /[^"\n\\]+/)),
-								$.escape_sequence
+								token.immediate(prec(1, /[^"\n\\\$]+/)),
+								$.escape_sequence,
+								$.env_spec,
 						)),
 						'"'
 				),
 
 				unquoted_string: $ => repeat1(choice(
-					token.immediate(/[^\s\n\"\\]+/),
+					token.immediate(/[^\s\n\"\\\$]+/),
 					token.immediate("\\ "),
+					$.env_spec,
 				)),
 
 				escape_sequence: $ => token.immediate(seq(
@@ -260,7 +313,7 @@ module.exports = grammar({
 						)
 				)),
 
-				_non_newline_whitespace: $ => /[\t ]*/,
+				_non_newline_whitespace: $ => /[\t ]+/,
 
 				comment: $ => seq("#", /.*/),
 		}

@@ -100,6 +100,10 @@
       "required": false,
       "types": [
         {
+          "type": "env_spec",
+          "named": true
+        },
+        {
           "type": "escape_sequence",
           "named": true
         }
@@ -171,6 +175,11 @@
     }
   },
   {
+    "type": "env_spec",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "expose_instruction",
     "named": true,
     "fields": {},
@@ -188,22 +197,39 @@
   {
     "type": "expose_port",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "env_spec",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "from_instruction",
     "named": true,
-    "fields": {},
+    "fields": {
+      "as": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "image_spec",
-          "named": true
-        },
-        {
-          "type": "name",
           "named": true
         },
         {
@@ -233,7 +259,7 @@
     }
   },
   {
-    "type": "image_spec",
+    "type": "image_digest",
     "named": true,
     "fields": {},
     "children": {
@@ -241,11 +267,73 @@
       "required": false,
       "types": [
         {
-          "type": "image_digest",
+          "type": "env_spec",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "image_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
         {
-          "type": "image_tag",
+          "type": "env_spec",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "image_spec",
+    "named": true,
+    "fields": {
+      "digest": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "image_digest",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "image_name",
+            "named": true
+          }
+        ]
+      },
+      "tag": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "image_tag",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "image_tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "env_spec",
           "named": true
         }
       ]
@@ -294,6 +382,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "env_spec",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -379,6 +482,21 @@
     "type": "param",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "env_spec",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "run_instruction",
@@ -501,7 +619,17 @@
   {
     "type": "stopsignal_instruction",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "env_spec",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "string_array",
@@ -521,7 +649,17 @@
   {
     "type": "unquoted_string",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "env_spec",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "user_instruction",
@@ -596,6 +734,10 @@
     "named": false
   },
   {
+    "type": "$",
+    "named": false
+  },
+  {
     "type": ",",
     "named": false
   },
@@ -617,6 +759,10 @@
   },
   {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": "@",
     "named": false
   },
   {
@@ -716,23 +862,11 @@
     "named": true
   },
   {
-    "type": "image_digest",
-    "named": true
-  },
-  {
-    "type": "image_tag",
-    "named": true
-  },
-  {
-    "type": "name",
+    "type": "{",
     "named": false
   },
   {
-    "type": "name",
-    "named": true
-  },
-  {
-    "type": "path",
-    "named": true
+    "type": "}",
+    "named": false
   }
 ]

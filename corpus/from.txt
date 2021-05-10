@@ -8,7 +8,8 @@ FROM testimage
 
 (source_file
 	(from_instruction
-		(image_spec)))
+		(image_spec
+			name: (image_name))))
 
 ==================
 Image with tag
@@ -21,7 +22,8 @@ FROM testimage:tag
 (source_file
 	(from_instruction
 		(image_spec
-		    (image_tag))))
+			name: (image_name)
+		    tag: (image_tag))))
 
 ==================
 Image with digest
@@ -34,7 +36,8 @@ FROM testimage@sha256:skgshlshg
 (source_file
 	(from_instruction
 		(image_spec
-		    (image_digest))))
+			name: (image_name)
+		    digest: (image_digest))))
 
 ==================
 Image with tag and digest
@@ -47,8 +50,9 @@ FROM testimage:tag@sha256:452525
 (source_file
 	(from_instruction
 		(image_spec
-		    (image_tag)
-		    (image_digest))))
+			name: (image_name)
+		    tag: (image_tag)
+		    digest: (image_digest))))
 
 
 ==================
@@ -62,7 +66,8 @@ FROM sourcegraph/alpine:3.12@sha256:ce099fbcd3cf70b338fc4cb2a4e1fa9ae847de21afdb
 (source_file
 	(from_instruction
 		(image_spec
-		    (image_tag)
-		    (image_digest))
-		(name)))
+			name: (image_name)
+		    tag: (image_tag)
+		    digest: (image_digest))
+		as: (name)))
 

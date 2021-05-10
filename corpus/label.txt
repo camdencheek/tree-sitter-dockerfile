@@ -46,3 +46,47 @@ LABEL key.1="value1" \
 		(label_pair
 			key: (unquoted_string)
 			value: (double_quoted_string))))
+
+==================
+Label
+==================
+
+LABEL key="value${FOO}"
+
+---
+
+(source_file
+	(label_instruction
+		(label_pair
+			key: (unquoted_string)
+			value: (double_quoted_string
+				(env_spec)))))
+
+==================
+Stopsignal
+==================
+
+STOPSIGNAL $FOO
+
+---
+
+(source_file
+	(stopsignal_instruction
+		(env_spec)))
+
+==================
+User
+==================
+
+USER foo$FOO:bar$BAR
+
+---
+
+(source_file
+	(user_instruction
+		user: (unquoted_string
+			(env_spec))
+		group: (unquoted_string
+			(env_spec))))
+		
+

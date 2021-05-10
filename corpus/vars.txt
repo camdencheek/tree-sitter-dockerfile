@@ -1,0 +1,197 @@
+==================
+Add
+==================
+
+ADD /$FOO ./${bar}
+
+---
+
+(source_file
+	(add_instruction
+		(path
+			(env_spec))
+		(path
+			(env_spec))))
+
+==================
+Copy
+==================
+
+COPY $FOO ./${bar}
+
+---
+
+(source_file
+	(copy_instruction
+		(path
+			(env_spec))
+		(path
+			(env_spec))))
+
+==================
+Special chars
+==================
+
+COPY $FOO ./${bar:-abc}
+
+---
+
+(source_file
+	(copy_instruction
+		(path
+			(env_spec))
+		(path
+			(env_spec))))
+
+==================
+Env
+==================
+
+ENV TEST="foo$BAR" \
+	TEST_2=foo\ bar$BAZ \
+	TEST_3="foo${bar}" \
+	TEST_4=foo\ ${baz}bar \
+
+
+---
+
+(source_file
+	(env_instruction
+		(env_pair
+			name: (unquoted_string)
+			value: (double_quoted_string
+				(env_spec)))
+		(env_pair
+			name: (unquoted_string)
+			value: (unquoted_string
+				(env_spec)))
+		(env_pair
+			name: (unquoted_string)
+			value: (double_quoted_string
+				(env_spec)))
+		(env_pair
+			name: (unquoted_string)
+			value: (unquoted_string
+				(env_spec)))))
+
+==================
+Expose
+==================
+
+EXPOSE $FOO
+
+
+---
+
+(source_file
+	(expose_instruction
+		(expose_port
+			(env_spec))))
+
+==================
+From
+==================
+
+FROM foo/$FOO:$BAR@sha256:$BAZ AS baz$QUX
+
+---
+
+(source_file
+	(from_instruction
+		(image_spec
+		    name: (image_name
+				(env_spec))
+		    tag: (image_tag
+				(env_spec))
+		    digest: (image_digest
+				(env_spec)))
+		as: (name
+			(env_spec))))
+
+==================
+Label
+==================
+
+LABEL key="value$FOO"
+
+---
+
+(source_file
+	(label_instruction
+		(label_pair
+			key: (unquoted_string)
+			value: (double_quoted_string
+				(env_spec)))))
+
+==================
+Stopsignal
+==================
+
+STOPSIGNAL $FOO
+
+---
+
+(source_file
+	(stopsignal_instruction
+		(env_spec)))
+
+==================
+User
+==================
+
+USER foo$FOO:bar${bar}
+
+---
+
+(source_file
+	(user_instruction
+		user: (unquoted_string
+			(env_spec))
+		group: (unquoted_string
+			(env_spec))))
+
+==================
+Volume
+==================
+
+volume /my$FOO /my${bar}
+
+
+---
+
+(source_file
+	(volume_instruction
+		(path
+			(env_spec))
+		(path
+			(env_spec))))
+
+==================
+Workdir
+==================
+
+WORKDIR /tmp/$FOO
+
+---
+
+(source_file
+	(workdir_instruction
+		(path
+			(env_spec))))
+
+		
+==================
+Onbuild
+==================
+
+ONBUILD ADD /$FOO ./${bar}
+
+---
+
+(source_file
+	(onbuild_instruction
+		(add_instruction
+			(path
+				(env_spec))
+			(path
+				(env_spec)))))
