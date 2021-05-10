@@ -194,11 +194,13 @@ module.exports = grammar({
 
 				expansion: $ => seq(
 					'$',
-					repeat1(choice(
-						token.immediate(/[a-zA-Z][a-zA-Z0-9_]*/),
-						seq('{', /[^\}]+/, '}'),
-					))
+					choice(
+						$.variable,
+						seq('{', alias(/[^\}]+/, $.variable), '}'),
+					)
 				),
+
+				variable: $ => token.immediate(/[a-zA-Z][a-zA-Z0-9_]*/),
 
 
 				env_pair: $ => seq(

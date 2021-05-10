@@ -9,9 +9,11 @@ ADD /$FOO ./${bar}
 (source_file
 	(add_instruction
 		(path
-			(expansion))
+			(expansion
+				(variable)))
 		(path
-			(expansion))))
+			(expansion
+				(variable)))))
 
 ==================
 Copy
@@ -24,9 +26,11 @@ COPY $FOO ./${bar}
 (source_file
 	(copy_instruction
 		(path
-			(expansion))
+			(expansion
+				(variable)))
 		(path
-			(expansion))))
+			(expansion
+				(variable)))))
 
 ==================
 Special chars
@@ -39,9 +43,11 @@ COPY $FOO ./${bar:-abc}
 (source_file
 	(copy_instruction
 		(path
-			(expansion))
+			(expansion
+				(variable)))
 		(path
-			(expansion))))
+			(expansion
+				(variable)))))
 
 ==================
 Env
@@ -60,19 +66,23 @@ ENV TEST="foo$BAR" \
 		(env_pair
 			name: (unquoted_string)
 			value: (double_quoted_string
-				(expansion)))
+				(expansion
+					(variable))))
 		(env_pair
 			name: (unquoted_string)
 			value: (unquoted_string
-				(expansion)))
+				(expansion
+					(variable))))
 		(env_pair
 			name: (unquoted_string)
 			value: (double_quoted_string
-				(expansion)))
+				(expansion
+					(variable))))
 		(env_pair
 			name: (unquoted_string)
 			value: (unquoted_string
-				(expansion)))))
+				(expansion
+					(variable))))))
 
 ==================
 Expose
@@ -86,7 +96,8 @@ EXPOSE $FOO
 (source_file
 	(expose_instruction
 		(expose_port
-			(expansion))))
+			(expansion
+				(variable)))))
 
 ==================
 From
@@ -100,13 +111,17 @@ FROM foo/$FOO:$BAR@sha256:$BAZ AS baz$QUX
 	(from_instruction
 		(image_spec
 		    name: (image_name
-				(expansion))
+				(expansion
+					(variable)))
 		    tag: (image_tag
-				(expansion))
+				(expansion
+					(variable)))
 		    digest: (image_digest
-				(expansion)))
+				(expansion
+					(variable))))
 		as: (image_alias
-			(expansion))))
+			(expansion
+				(variable)))))
 
 ==================
 Label
@@ -121,7 +136,8 @@ LABEL key="value$FOO"
 		(label_pair
 			key: (unquoted_string)
 			value: (double_quoted_string
-				(expansion)))))
+				(expansion
+					(variable))))))
 
 ==================
 Stopsignal
@@ -133,7 +149,8 @@ STOPSIGNAL $FOO
 
 (source_file
 	(stopsignal_instruction
-		(expansion)))
+		(expansion
+			(variable))))
 
 ==================
 User
@@ -146,9 +163,11 @@ USER foo$FOO:bar${bar}
 (source_file
 	(user_instruction
 		user: (unquoted_string
-			(expansion))
+			(expansion
+				(variable)))
 		group: (unquoted_string
-			(expansion))))
+			(expansion
+				(variable)))))
 
 ==================
 Volume
@@ -162,9 +181,11 @@ volume /my$FOO /my${bar}
 (source_file
 	(volume_instruction
 		(path
-			(expansion))
+			(expansion
+				(variable)))
 		(path
-			(expansion))))
+			(expansion
+				(variable)))))
 
 ==================
 Workdir
@@ -177,7 +198,8 @@ WORKDIR /tmp/$FOO
 (source_file
 	(workdir_instruction
 		(path
-			(expansion))))
+			(expansion
+				(variable)))))
 
 		
 ==================
@@ -192,6 +214,8 @@ ONBUILD ADD /$FOO ./${bar}
 	(onbuild_instruction
 		(add_instruction
 			(path
-				(expansion))
+				(expansion
+					(variable)))
 			(path
-				(expansion)))))
+				(expansion
+					(variable))))))

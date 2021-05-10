@@ -60,7 +60,8 @@ LABEL key="value${FOO}"
 		(label_pair
 			key: (unquoted_string)
 			value: (double_quoted_string
-				(expansion)))))
+				(expansion
+					(variable))))))
 
 ==================
 Stopsignal
@@ -72,7 +73,8 @@ STOPSIGNAL $FOO
 
 (source_file
 	(stopsignal_instruction
-		(expansion)))
+		(expansion
+			(variable))))
 
 ==================
 User
@@ -85,8 +87,10 @@ USER foo$FOO:bar$BAR
 (source_file
 	(user_instruction
 		user: (unquoted_string
-			(expansion))
+			(expansion
+				(variable)))
 		group: (unquoted_string
-			(expansion))))
+			(expansion
+				(variable)))))
 		
 
