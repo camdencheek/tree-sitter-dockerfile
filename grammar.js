@@ -33,7 +33,7 @@ module.exports = grammar({
 						$.image_spec,
 						optional(seq(
 								alias(/[aA][sS]/, "AS"),
-								field("as", $.name),
+								field("as", $.image_alias),
 						)),
 				),
 
@@ -181,7 +181,6 @@ module.exports = grammar({
 						$.string_array,
 				),
 				
-				// path: $ => /[^-\[][^\s]*/,
 				path: $ => seq(
 					choice(
 						/[^-\s]/, // cannot start with a '-' to avoid conflicts with params
@@ -240,14 +239,14 @@ module.exports = grammar({
 				),
 
 				image_name: $ => repeat1(choice(
-					token.immediate(/[^:@\s\$]+/),
+					token.immediate(/[^@:\s\$]+/),
 					$.env_spec,
 				)),
 
 				image_tag: $ => seq(
 						token.immediate(":"),
 						repeat1(choice(
-							token.immediate(/[^\s@\$]+/),
+							token.immediate(/[^@\s\$]+/),
 							$.env_spec,
 						))
 				),
@@ -255,7 +254,7 @@ module.exports = grammar({
 				image_digest: $ => seq(
 						token.immediate("@"),
 						repeat1(choice(
-							token.immediate(/[^\s\$]+/),
+							token.immediate(/[a-zA-Z0-9:]+/),
 							$.env_spec,
 						)),
 				),
@@ -267,8 +266,8 @@ module.exports = grammar({
 						field("value", token.immediate(/[^\s]+/)),
 				),
 
-				name: $ => repeat1(choice(
-					/[-a-z_]+/,
+				image_alias: $ => repeat1(choice(
+					/[-a-zA-Z0-9_]+/,
 					$.env_spec,
 				)),
 

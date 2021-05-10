@@ -142,7 +142,7 @@
                   "name": "as",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "name"
+                    "name": "image_alias"
                   }
                 }
               ]
@@ -1016,7 +1016,7 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[^:@\\s\\$]+"
+              "value": "[^@:\\s\\$]+"
             }
           },
           {
@@ -1045,7 +1045,7 @@
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[^\\s@\\$]+"
+                  "value": "[^@\\s\\$]+"
                 }
               },
               {
@@ -1076,7 +1076,7 @@
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[^\\s\\$]+"
+                  "value": "[a-zA-Z0-9:]+"
                 }
               },
               {
@@ -1126,14 +1126,14 @@
         }
       ]
     },
-    "name": {
+    "image_alias": {
       "type": "REPEAT1",
       "content": {
         "type": "CHOICE",
         "members": [
           {
             "type": "PATTERN",
-            "value": "[-a-z_]+"
+            "value": "[-a-zA-Z0-9_]+"
           },
           {
             "type": "SYMBOL",

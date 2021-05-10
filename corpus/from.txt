@@ -69,5 +69,5 @@ FROM sourcegraph/alpine:3.12@sha256:ce099fbcd3cf70b338fc4cb2a4e1fa9ae847de21afdb
 			name: (image_name)
 		    tag: (image_tag)
 		    digest: (image_digest))
-		as: (name)))
+		as: (image_alias)))
 

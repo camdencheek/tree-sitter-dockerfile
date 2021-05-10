@@ -218,7 +218,7 @@
         "required": false,
         "types": [
           {
-            "type": "name",
+            "type": "image_alias",
             "named": true
           }
         ]
@@ -253,6 +253,21 @@
         },
         {
           "type": "param",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "image_alias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "env_spec",
           "named": true
         }
       ]
@@ -382,21 +397,6 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "name",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "env_spec",
-          "named": true
-        }
-      ]
     }
   },
   {

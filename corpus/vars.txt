@@ -105,7 +105,7 @@ FROM foo/$FOO:$BAR@sha256:$BAZ AS baz$QUX
 				(env_spec))
 		    digest: (image_digest
 				(env_spec)))
-		as: (name
+		as: (image_alias
 			(env_spec))))
 
 ==================
