@@ -9,9 +9,9 @@ ADD /$FOO ./${bar}
 (source_file
 	(add_instruction
 		(path
-			(env_spec))
+			(expansion))
 		(path
-			(env_spec))))
+			(expansion))))
 
 ==================
 Copy
@@ -24,9 +24,9 @@ COPY $FOO ./${bar}
 (source_file
 	(copy_instruction
 		(path
-			(env_spec))
+			(expansion))
 		(path
-			(env_spec))))
+			(expansion))))
 
 ==================
 Special chars
@@ -39,9 +39,9 @@ COPY $FOO ./${bar:-abc}
 (source_file
 	(copy_instruction
 		(path
-			(env_spec))
+			(expansion))
 		(path
-			(env_spec))))
+			(expansion))))
 
 ==================
 Env
@@ -60,19 +60,19 @@ ENV TEST="foo$BAR" \
 		(env_pair
 			name: (unquoted_string)
 			value: (double_quoted_string
-				(env_spec)))
+				(expansion)))
 		(env_pair
 			name: (unquoted_string)
 			value: (unquoted_string
-				(env_spec)))
+				(expansion)))
 		(env_pair
 			name: (unquoted_string)
 			value: (double_quoted_string
-				(env_spec)))
+				(expansion)))
 		(env_pair
 			name: (unquoted_string)
 			value: (unquoted_string
-				(env_spec)))))
+				(expansion)))))
 
 ==================
 Expose
@@ -86,7 +86,7 @@ EXPOSE $FOO
 (source_file
 	(expose_instruction
 		(expose_port
-			(env_spec))))
+			(expansion))))
 
 ==================
 From
@@ -100,13 +100,13 @@ FROM foo/$FOO:$BAR@sha256:$BAZ AS baz$QUX
 	(from_instruction
 		(image_spec
 		    name: (image_name
-				(env_spec))
+				(expansion))
 		    tag: (image_tag
-				(env_spec))
+				(expansion))
 		    digest: (image_digest
-				(env_spec)))
+				(expansion)))
 		as: (image_alias
-			(env_spec))))
+			(expansion))))
 
 ==================
 Label
@@ -121,7 +121,7 @@ LABEL key="value$FOO"
 		(label_pair
 			key: (unquoted_string)
 			value: (double_quoted_string
-				(env_spec)))))
+				(expansion)))))
 
 ==================
 Stopsignal
@@ -133,7 +133,7 @@ STOPSIGNAL $FOO
 
 (source_file
 	(stopsignal_instruction
-		(env_spec)))
+		(expansion)))
 
 ==================
 User
@@ -146,9 +146,9 @@ USER foo$FOO:bar${bar}
 (source_file
 	(user_instruction
 		user: (unquoted_string
-			(env_spec))
+			(expansion))
 		group: (unquoted_string
-			(env_spec))))
+			(expansion))))
 
 ==================
 Volume
@@ -162,9 +162,9 @@ volume /my$FOO /my${bar}
 (source_file
 	(volume_instruction
 		(path
-			(env_spec))
+			(expansion))
 		(path
-			(env_spec))))
+			(expansion))))
 
 ==================
 Workdir
@@ -177,7 +177,7 @@ WORKDIR /tmp/$FOO
 (source_file
 	(workdir_instruction
 		(path
-			(env_spec))))
+			(expansion))))
 
 		
 ==================
@@ -192,6 +192,6 @@ ONBUILD ADD /$FOO ./${bar}
 	(onbuild_instruction
 		(add_instruction
 			(path
-				(env_spec))
+				(expansion))
 			(path
-				(env_spec)))))
+				(expansion)))))

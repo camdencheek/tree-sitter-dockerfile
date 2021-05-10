@@ -100,11 +100,11 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "escape_sequence",
           "named": true
         },
         {
-          "type": "escape_sequence",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -175,7 +175,7 @@
     }
   },
   {
-    "type": "env_spec",
+    "type": "expansion",
     "named": true,
     "fields": {}
   },
@@ -203,7 +203,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -267,7 +267,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -282,7 +282,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -297,7 +297,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -348,7 +348,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -492,7 +492,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -625,7 +625,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]
@@ -655,7 +655,7 @@
       "required": false,
       "types": [
         {
-          "type": "env_spec",
+          "type": "expansion",
           "named": true
         }
       ]

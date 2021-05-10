@@ -124,7 +124,7 @@ module.exports = grammar({
 
 				_user_name_group: $ => repeat1(choice(
 					token.immediate(/[a-z][-a-z0-9_]*/),
-					$.env_spec,
+					$.expansion,
 				)),
 
 				workdir_instruction: $ => seq(
@@ -160,7 +160,7 @@ module.exports = grammar({
 
 				_stopsignal_value: $ => repeat1(choice(
 						/[A-Z0-9]+/,
-						$.env_spec,
+						$.expansion,
 				)),
 
 				healthcheck_instruction: $ => seq(
@@ -184,15 +184,15 @@ module.exports = grammar({
 				path: $ => seq(
 					choice(
 						/[^-\s]/, // cannot start with a '-' to avoid conflicts with params
-						$.env_spec,
+						$.expansion,
 					),
 					repeat(choice(
 						token.immediate(/[^\s\$]+/),
-						$.env_spec,
+						$.expansion,
 					)),
 				),
 
-				env_spec: $ => seq(
+				expansion: $ => seq(
 					'$',
 					repeat1(choice(
 						token.immediate(/[a-zA-Z][a-zA-Z0-9_]*/),
@@ -218,7 +218,7 @@ module.exports = grammar({
 							"/udp",
 						)),
 					),
-					$.env_spec,
+					$.expansion,
 				),
 
 				label_pair: $ => seq(
@@ -240,14 +240,14 @@ module.exports = grammar({
 
 				image_name: $ => repeat1(choice(
 					token.immediate(/[^@:\s\$]+/),
-					$.env_spec,
+					$.expansion,
 				)),
 
 				image_tag: $ => seq(
 						token.immediate(":"),
 						repeat1(choice(
 							token.immediate(/[^@\s\$]+/),
-							$.env_spec,
+							$.expansion,
 						))
 				),
 
@@ -255,7 +255,7 @@ module.exports = grammar({
 						token.immediate("@"),
 						repeat1(choice(
 							token.immediate(/[a-zA-Z0-9:]+/),
-							$.env_spec,
+							$.expansion,
 						)),
 				),
 
@@ -268,7 +268,7 @@ module.exports = grammar({
 
 				image_alias: $ => repeat1(choice(
 					/[-a-zA-Z0-9_]+/,
-					$.env_spec,
+					$.expansion,
 				)),
 
 				string_array: $ => seq(
@@ -290,7 +290,7 @@ module.exports = grammar({
 						repeat(choice(
 								token.immediate(prec(1, /[^"\n\\\$]+/)),
 								$.escape_sequence,
-								$.env_spec,
+								$.expansion,
 						)),
 						'"'
 				),
@@ -298,7 +298,7 @@ module.exports = grammar({
 				unquoted_string: $ => repeat1(choice(
 					token.immediate(/[^\s\n\"\\\$]+/),
 					token.immediate("\\ "),
-					$.env_spec,
+					$.expansion,
 				)),
 
 				escape_sequence: $ => token.immediate(seq(
