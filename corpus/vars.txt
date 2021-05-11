@@ -56,8 +56,7 @@ Env
 ENV TEST="foo$BAR" \
 	TEST_2=foo\ bar$BAZ \
 	TEST_3="foo${bar}" \
-	TEST_4=foo\ ${baz}bar \
-
+	TEST_4=foo\ ${baz}bar 
 
 ---
 
@@ -68,16 +67,19 @@ ENV TEST="foo$BAR" \
 			value: (double_quoted_string
 				(expansion
 					(variable))))
+		(line_continuation)
 		(env_pair
 			name: (unquoted_string)
 			value: (unquoted_string
 				(expansion
 					(variable))))
+		(line_continuation)
 		(env_pair
 			name: (unquoted_string)
 			value: (double_quoted_string
 				(expansion
 					(variable))))
+		(line_continuation)
 		(env_pair
 			name: (unquoted_string)
 			value: (unquoted_string

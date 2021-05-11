@@ -36,6 +36,7 @@ VOLUME /myvol1 \
 (source_file
 	(volume_instruction
 		(path)
+		(line_continuation)
 		(path)))
 
 ==================
@@ -64,4 +65,5 @@ VOLUME ["/test/myvol", \
 	(volume_instruction
 	    (string_array
 			(double_quoted_string)
+			(line_continuation)
 			(double_quoted_string))))

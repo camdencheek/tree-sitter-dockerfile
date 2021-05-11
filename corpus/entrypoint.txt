@@ -8,10 +8,11 @@ ENTRYPOINT echo "test"
 
 (source_file
 	(entrypoint_instruction
-		(shell_command)))
+		(shell_command
+			(shell_fragment))))
 
 ==================
-Shell command multiline
+Entrypoint Shell command multiline
 ==================
 
 ENTRYPOINT echo "test" \
@@ -23,7 +24,12 @@ ENTRYPOINT echo "test" \
 
 (source_file
 	(entrypoint_instruction
-		(shell_command)))
+		(shell_command
+			(shell_fragment)
+			(line_continuation)
+			(shell_fragment)
+			(line_continuation)
+			(shell_fragment))))
 
 ==================
 Run with shell empty array

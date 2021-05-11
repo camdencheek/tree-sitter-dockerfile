@@ -43,6 +43,7 @@ LABEL key.1="value1" \
 		(label_pair
 			key: (unquoted_string)
 			value: (double_quoted_string))
+		(line_continuation)
 		(label_pair
 			key: (unquoted_string)
 			value: (double_quoted_string))))

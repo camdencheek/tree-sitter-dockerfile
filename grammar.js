@@ -283,9 +283,26 @@ module.exports = grammar({
 				),
 
 				shell_command: $ => seq(
-						/[^\[\s].*[^\\\n]/, // TODO allow escape sequences
-						repeat(seq("\\\n", /.*[^\\\n]/)),
+						$.shell_fragment,
+						repeat(seq(
+							$.line_continuation,
+							repeat($._comment_line),
+							$.shell_fragment,
+						)),
 				),
+
+				shell_fragment: $ => repeat1(choice(
+					/[^\\\[\n#\s][^\\\[\n]*/, // non-escape or newline character
+					/\\[^\n]/,                // non-line-continuation escape
+				)),
+
+				line_continuation: $ => '\\\n',
+
+				_comment_line: $ => seq(
+					alias($._anon_comment, $.comment), '\n'
+				),
+
+				_anon_comment: $ => seq('#', /.*/),
 
 				double_quoted_string: $ => seq(
 						'"',

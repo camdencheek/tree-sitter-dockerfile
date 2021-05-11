@@ -530,6 +530,29 @@
   {
     "type": "shell_command",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "line_continuation",
+          "named": true
+        },
+        {
+          "type": "shell_fragment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "shell_fragment",
+    "named": true,
     "fields": {}
   },
   {
@@ -856,10 +879,6 @@
     "named": false
   },
   {
-    "type": "\\\n",
-    "named": false
-  },
-  {
     "type": "\\ ",
     "named": false
   },
@@ -869,6 +888,10 @@
   },
   {
     "type": "escape_sequence",
+    "named": true
+  },
+  {
+    "type": "line_continuation",
     "named": true
   },
   {

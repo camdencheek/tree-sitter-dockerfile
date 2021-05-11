@@ -1198,8 +1198,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[^\\[\\s].*[^\\\\\\n]"
+          "type": "SYMBOL",
+          "name": "shell_fragment"
         },
         {
           "type": "REPEAT",
@@ -1207,15 +1207,73 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "STRING",
-                "value": "\\\n"
+                "type": "SYMBOL",
+                "name": "line_continuation"
               },
               {
-                "type": "PATTERN",
-                "value": ".*[^\\\\\\n]"
+                "type": "REPEAT",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_comment_line"
+                }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "shell_fragment"
               }
             ]
           }
+        }
+      ]
+    },
+    "shell_fragment": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[^\\\\\\[\\n#\\s][^\\\\\\[\\n]*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\\\[^\\n]"
+          }
+        ]
+      }
+    },
+    "line_continuation": {
+      "type": "STRING",
+      "value": "\\\n"
+    },
+    "_comment_line": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_anon_comment"
+          },
+          "named": true,
+          "value": "comment"
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        }
+      ]
+    },
+    "_anon_comment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#"
+        },
+        {
+          "type": "PATTERN",
+          "value": ".*"
         }
       ]
     },
