@@ -91,6 +91,10 @@
         {
           "type": "SYMBOL",
           "name": "maintainer_instruction"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "cross_build_instruction"
         }
       ]
     },
@@ -790,6 +794,24 @@
           },
           "named": false,
           "value": "MAINTAINER"
+        },
+        {
+          "type": "PATTERN",
+          "value": ".*"
+        }
+      ]
+    },
+    "cross_build_instruction": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[cC][rR][oO][sS][sS]_[bB][uU][iI][lL][dD][a-zA-Z_]*"
+          },
+          "named": false,
+          "value": "CROSS_BUILD"
         },
         {
           "type": "PATTERN",

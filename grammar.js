@@ -29,6 +29,7 @@ module.exports = grammar({
 						$.healthcheck_instruction,
 						$.shell_instruction,
 						$.maintainer_instruction,
+						$.cross_build_instruction,
 				),
 
 				from_instruction: $ => seq(
@@ -190,6 +191,11 @@ module.exports = grammar({
 
 				maintainer_instruction: $ => seq(
 						alias(/[mM][aA][iI][nN][tT][aA][iI][nN][eE][rR]/, "MAINTAINER"),
+						/.*/,
+				),
+
+				cross_build_instruction: $ => seq(
+						alias(/[cC][rR][oO][sS][sS]_[bB][uU][iI][lL][dD][a-zA-Z_]*/, "CROSS_BUILD"),
 						/.*/,
 				),
 				

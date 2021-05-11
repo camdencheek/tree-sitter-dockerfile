@@ -92,6 +92,11 @@
     }
   },
   {
+    "type": "cross_build_instruction",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "double_quoted_string",
     "named": true,
     "fields": {},
@@ -433,6 +438,10 @@
           "named": true
         },
         {
+          "type": "cross_build_instruction",
+          "named": true
+        },
+        {
           "type": "entrypoint_instruction",
           "named": true
         },
@@ -595,6 +604,10 @@
         },
         {
           "type": "copy_instruction",
+          "named": true
+        },
+        {
+          "type": "cross_build_instruction",
           "named": true
         },
         {
@@ -823,6 +836,10 @@
   },
   {
     "type": "COPY",
+    "named": false
+  },
+  {
+    "type": "CROSS_BUILD",
     "named": false
   },
   {
