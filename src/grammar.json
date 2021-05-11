@@ -258,14 +258,19 @@
           "value": "EXPOSE"
         },
         {
-          "type": "SYMBOL",
-          "name": "_non_newline_whitespace"
-        },
-        {
           "type": "REPEAT1",
           "content": {
-            "type": "SYMBOL",
-            "name": "expose_port"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "expose_port"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expansion"
+              }
+            ]
           }
         }
       ]
@@ -800,7 +805,7 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": "[^-\\s]"
+              "value": "[^-\\s\\$]"
             },
             {
               "type": "SYMBOL",
@@ -814,11 +819,8 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "[^\\s\\$]+"
-                }
+                "type": "PATTERN",
+                "value": "[^\\s\\$]+"
               },
               {
                 "type": "SYMBOL",
@@ -833,11 +835,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "STRING",
-            "value": "$"
-          }
+          "type": "STRING",
+          "value": "$"
         },
         {
           "type": "CHOICE",
@@ -873,11 +872,8 @@
       ]
     },
     "variable": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[a-zA-Z][a-zA-Z0-9_]*"
-      }
+      "type": "PATTERN",
+      "value": "[a-zA-Z][a-zA-Z0-9_]*"
     },
     "env_pair": {
       "type": "SEQ",
@@ -886,13 +882,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[a-zA-Z][a-zA-Z0-9_]+[a-zA-Z0-9]"
-            },
-            "named": true,
-            "value": "unquoted_string"
+            "type": "SYMBOL",
+            "name": "_env_key"
           }
         },
         {
@@ -928,13 +919,8 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[a-zA-Z][a-zA-Z0-9_]+[a-zA-Z0-9]"
-            },
-            "named": true,
-            "value": "unquoted_string"
+            "type": "SYMBOL",
+            "name": "_env_key"
           }
         },
         {
@@ -963,42 +949,42 @@
         }
       ]
     },
+    "_env_key": {
+      "type": "ALIAS",
+      "content": {
+        "type": "PATTERN",
+        "value": "[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]"
+      },
+      "named": true,
+      "value": "unquoted_string"
+    },
     "expose_port": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
+          "type": "PATTERN",
+          "value": "\\d+"
+        },
+        {
+          "type": "CHOICE",
           "members": [
-            {
-              "type": "PATTERN",
-              "value": "\\d+"
-            },
             {
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "/tcp"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "/udp"
-                    }
-                  ]
+                  "type": "STRING",
+                  "value": "/tcp"
                 },
                 {
-                  "type": "BLANK"
+                  "type": "STRING",
+                  "value": "/udp"
                 }
               ]
+            },
+            {
+              "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expansion"
         }
       ]
     },

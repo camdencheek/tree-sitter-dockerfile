@@ -92,14 +92,12 @@ Expose
 
 EXPOSE $FOO
 
-
 ---
 
 (source_file
 	(expose_instruction
-		(expose_port
-			(expansion
-				(variable)))))
+		 (expansion
+			  (variable))))
 
 ==================
 From

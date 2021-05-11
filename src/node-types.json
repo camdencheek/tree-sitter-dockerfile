@@ -198,6 +198,10 @@
       "required": true,
       "types": [
         {
+          "type": "expansion",
+          "named": true
+        },
+        {
           "type": "expose_port",
           "named": true
         }
@@ -207,17 +211,7 @@
   {
     "type": "expose_port",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "expansion",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "from_instruction",

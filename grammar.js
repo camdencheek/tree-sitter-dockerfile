@@ -1,7 +1,11 @@
 module.exports = grammar({
 		name: 'dockerfile',
 
-		extras: $ => [$.comment, /\s+/, '\\\n'],
+		extras: $ => [
+			$.comment,
+			/\s+/,
+			'\\\n'
+		],
 
 		rules: {
 				source_file: $ => repeat(seq($._instruction, "\n")),
@@ -64,8 +68,7 @@ module.exports = grammar({
 
 				expose_instruction: $ => seq(
 						alias(/[eE][xX][pP][oO][sS][eE]/, "EXPOSE"),
-						$._non_newline_whitespace,
-						repeat1($.expose_port),
+						repeat1(choice($.expose_port, $.expansion)),
 				),
 
 				env_instruction: $ => seq(
@@ -192,28 +195,27 @@ module.exports = grammar({
 				
 				path: $ => seq(
 					choice(
-						/[^-\s]/, // cannot start with a '-' to avoid conflicts with params
+						/[^-\s\$]/, // cannot start with a '-' to avoid conflicts with params
 						$.expansion,
 					),
 					repeat(choice(
-						token.immediate(/[^\s\$]+/),
+						/[^\s\$]+/,
 						$.expansion,
 					)),
 				),
 
 				expansion: $ => seq(
-					token.immediate('$'),
+					'$',
 					choice(
 						$.variable,
 						seq('{', alias(/[^\}]+/, $.variable), '}'),
 					)
 				),
 
-				variable: $ => token.immediate(/[a-zA-Z][a-zA-Z0-9_]*/),
-
+				variable: $ => /[a-zA-Z][a-zA-Z0-9_]*/,
 
 				env_pair: $ => seq(
-					field("name", alias(/[a-zA-Z][a-zA-Z0-9_]+[a-zA-Z0-9]/, $.unquoted_string)),
+					field("name", $._env_key),
 					token.immediate("="),
 					field("value", choice(
 						$.double_quoted_string,
@@ -222,7 +224,7 @@ module.exports = grammar({
 				),
 
 				_spaced_env_pair: $ => seq(
-					field("name", alias(/[a-zA-Z][a-zA-Z0-9_]+[a-zA-Z0-9]/, $.unquoted_string)),
+					field("name", $._env_key),
 					token.immediate(/\s+/),
 					field("value", choice(
 						$.double_quoted_string,
@@ -230,15 +232,14 @@ module.exports = grammar({
 					)),
 				),
 
-				expose_port: $ => choice(
-					seq(
-						/\d+/,
-						optional(choice(
-							"/tcp",
-							"/udp",
-						)),
-					),
-					$.expansion,
+				_env_key: $ => alias(/[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]/, $.unquoted_string),
+
+				expose_port: $ => seq(
+					/\d+/,
+					optional(choice(
+						"/tcp",
+						"/udp",
+					)),
 				),
 
 				label_pair: $ => seq(
