@@ -24,6 +24,7 @@ module.exports = grammar({
 						$.stopsignal_instruction,
 						$.healthcheck_instruction,
 						$.shell_instruction,
+						$.maintainer_instruction,
 				),
 
 				from_instruction: $ => seq(
@@ -182,6 +183,11 @@ module.exports = grammar({
 						alias(/[sS][hH][eE][lL][lL]/, "SHELL"),
 						$._non_newline_whitespace,
 						$.string_array,
+				),
+
+				maintainer_instruction: $ => seq(
+						alias(/[mM][aA][iI][nN][tT][aA][iI][nN][eE][rR]/, "MAINTAINER"),
+						/.*/,
 				),
 				
 				path: $ => seq(

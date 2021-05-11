@@ -410,6 +410,11 @@
     }
   },
   {
+    "type": "maintainer_instruction",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "onbuild_instruction",
     "named": true,
     "fields": {},
@@ -455,6 +460,10 @@
         },
         {
           "type": "label_instruction",
+          "named": true
+        },
+        {
+          "type": "maintainer_instruction",
           "named": true
         },
         {
@@ -616,6 +625,10 @@
         },
         {
           "type": "label_instruction",
+          "named": true
+        },
+        {
+          "type": "maintainer_instruction",
           "named": true
         },
         {
@@ -840,6 +853,10 @@
   },
   {
     "type": "LABEL",
+    "named": false
+  },
+  {
+    "type": "MAINTAINER",
     "named": false
   },
   {

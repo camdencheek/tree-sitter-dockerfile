@@ -87,6 +87,10 @@
         {
           "type": "SYMBOL",
           "name": "shell_instruction"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "maintainer_instruction"
         }
       ]
     },
@@ -767,6 +771,24 @@
         {
           "type": "SYMBOL",
           "name": "string_array"
+        }
+      ]
+    },
+    "maintainer_instruction": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[mM][aA][iI][nN][tT][aA][iI][nN][eE][rR]"
+          },
+          "named": false,
+          "value": "MAINTAINER"
+        },
+        {
+          "type": "PATTERN",
+          "value": ".*"
         }
       ]
     },
