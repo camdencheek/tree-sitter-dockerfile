@@ -196,7 +196,7 @@ module.exports = grammar({
 				),
 
 				expansion: $ => seq(
-					'$',
+					token.immediate('$'),
 					choice(
 						$.variable,
 						seq('{', alias(/[^\}]+/, $.variable), '}'),
@@ -304,8 +304,8 @@ module.exports = grammar({
 				),
 
 				shell_fragment: $ => repeat1(choice(
-					/[^\\\[\n#\s][^\\\[\n]*/, // non-escape or newline character
-					/\\[^\n]/,                // non-line-continuation escape
+					/[^\\\[\n#\s][^\\\[\n]*/,
+					/\\[^\n]/,
 				)),
 
 				line_continuation: $ => '\\\n',
