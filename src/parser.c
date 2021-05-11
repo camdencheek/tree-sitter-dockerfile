@@ -2457,7 +2457,6 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(aux_sym_shell_fragment_token1);
       if (lookahead != 0 &&
           lookahead != '\n' &&
-          lookahead != '[' &&
           lookahead != '\\') ADVANCE(225);
       END_STATE();
     case 226:

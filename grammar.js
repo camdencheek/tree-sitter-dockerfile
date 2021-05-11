@@ -310,7 +310,7 @@ module.exports = grammar({
 				),
 
 				shell_fragment: $ => repeat1(choice(
-					/[^\\\[\n#\s][^\\\[\n]*/,
+					/[^\\\[\n#\s][^\\\n]*/,
 					/\\[^\n]/,
 				)),
 

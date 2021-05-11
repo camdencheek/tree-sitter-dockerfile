@@ -1314,7 +1314,7 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "[^\\\\\\[\\n#\\s][^\\\\\\[\\n]*"
+            "value": "[^\\\\\\[\\n#\\s][^\\\\\\n]*"
           },
           {
             "type": "PATTERN",
