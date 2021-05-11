@@ -70,7 +70,10 @@ module.exports = grammar({
 				env_instruction: $ => seq(
 						alias(/[eE][nN][vV]/, "ENV"),
 						$._non_newline_whitespace,
-						repeat1($.env_pair),
+						choice(
+							repeat1($.env_pair),
+							alias($._spaced_env_pair, $.env_pair),
+						)
 				),
 
 				add_instruction: $ => seq(
@@ -206,6 +209,15 @@ module.exports = grammar({
 				env_pair: $ => seq(
 					field("name", alias(/[a-zA-Z][a-zA-Z0-9_]+[a-zA-Z0-9]/, $.unquoted_string)),
 					token.immediate("="),
+					field("value", choice(
+						$.double_quoted_string,
+						$.unquoted_string,
+					)),
+				),
+
+				_spaced_env_pair: $ => seq(
+					field("name", alias(/[a-zA-Z][a-zA-Z0-9_]+[a-zA-Z0-9]/, $.unquoted_string)),
+					token.immediate(/\s+/),
 					field("value", choice(
 						$.double_quoted_string,
 						$.unquoted_string,
