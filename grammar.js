@@ -32,7 +32,6 @@ module.exports = grammar({
     from_instruction: ($) =>
       seq(
         alias(/[fF][rR][oO][mM]/, "FROM"),
-        $._non_newline_whitespace,
         optional($.param),
         $.image_spec,
         optional(seq(alias(/[aA][sS]/, "AS"), field("as", $.image_alias)))
@@ -41,21 +40,18 @@ module.exports = grammar({
     run_instruction: ($) =>
       seq(
         alias(/[rR][uU][nN]/, "RUN"),
-        $._non_newline_whitespace,
         choice($.string_array, $.shell_command)
       ),
 
     cmd_instruction: ($) =>
       seq(
         alias(/[cC][mM][dD]/, "CMD"),
-        $._non_newline_whitespace,
         choice($.string_array, $.shell_command)
       ),
 
     label_instruction: ($) =>
       seq(
         alias(/[lL][aA][bB][eE][lL]/, "LABEL"),
-        $._non_newline_whitespace,
         repeat1($.label_pair)
       ),
 
@@ -68,14 +64,12 @@ module.exports = grammar({
     env_instruction: ($) =>
       seq(
         alias(/[eE][nN][vV]/, "ENV"),
-        $._non_newline_whitespace,
         choice(repeat1($.env_pair), alias($._spaced_env_pair, $.env_pair))
       ),
 
     add_instruction: ($) =>
       seq(
         alias(/[aA][dD][dD]/, "ADD"),
-        $._non_newline_whitespace,
         optional($.param),
         $.path,
         $._non_newline_whitespace,
@@ -85,7 +79,6 @@ module.exports = grammar({
     copy_instruction: ($) =>
       seq(
         alias(/[cC][oO][pP][yY]/, "COPY"),
-        $._non_newline_whitespace,
         optional($.param),
         $.path,
         $._non_newline_whitespace,
@@ -95,14 +88,12 @@ module.exports = grammar({
     entrypoint_instruction: ($) =>
       seq(
         alias(/[eE][nN][tT][rR][yY][pP][oO][iI][nN][tT]/, "ENTRYPOINT"),
-        $._non_newline_whitespace,
         choice($.string_array, $.shell_command)
       ),
 
     volume_instruction: ($) =>
       seq(
         alias(/[vV][oO][lL][uU][mM][eE]/, "VOLUME"),
-        $._non_newline_whitespace,
         choice(
           $.string_array,
           seq($.path, repeat(seq($._non_newline_whitespace, $.path)))
@@ -112,30 +103,24 @@ module.exports = grammar({
     user_instruction: ($) =>
       seq(
         alias(/[uU][sS][eE][rR]/, "USER"),
-        $._non_newline_whitespace,
-        field("user", alias($._user_name_group, $.unquoted_string)),
+        field("user", alias($._user_name_or_group, $.unquoted_string)),
         optional(
           seq(
             token.immediate(":"),
-            field("group", alias($._user_name_group, $.unquoted_string))
+            field("group", alias($._user_name_or_group, $.unquoted_string))
           )
         )
       ),
 
-    _user_name_group: ($) =>
-      repeat1(choice(token.immediate(/[a-z][-a-z0-9_]*/), $.expansion)),
+    _user_name_or_group: ($) =>
+      repeat1(choice(/[a-z][-a-z0-9_]*/, $.expansion)),
 
     workdir_instruction: ($) =>
-      seq(
-        alias(/[wW][oO][rR][kK][dD][iI][rR]/, "WORKDIR"),
-        $._non_newline_whitespace,
-        $.path
-      ),
+      seq(alias(/[wW][oO][rR][kK][dD][iI][rR]/, "WORKDIR"), $.path),
 
     arg_instruction: ($) =>
       seq(
         alias(/[aA][rR][gG]/, "ARG"),
-        $._non_newline_whitespace,
         field("name", alias(/[a-zA-Z0-9_]+/, $.unquoted_string)),
         optional(
           seq(
@@ -146,16 +131,11 @@ module.exports = grammar({
       ),
 
     onbuild_instruction: ($) =>
-      seq(
-        alias(/[oO][nN][bB][uU][iI][lL][dD]/, "ONBUILD"),
-        $._non_newline_whitespace,
-        $._instruction
-      ),
+      seq(alias(/[oO][nN][bB][uU][iI][lL][dD]/, "ONBUILD"), $._instruction),
 
     stopsignal_instruction: ($) =>
       seq(
         alias(/[sS][tT][oO][pP][sS][iI][gG][nN][aA][lL]/, "STOPSIGNAL"),
-        $._non_newline_whitespace,
         $._stopsignal_value
       ),
 
@@ -164,16 +144,11 @@ module.exports = grammar({
     healthcheck_instruction: ($) =>
       seq(
         alias(/[hH][eE][aA][lL][tT][hH][cC][hH][eE][cC][kK]/, "HEALTHCHECK"),
-        $._non_newline_whitespace,
         choice("NONE", seq(repeat($.param), $.cmd_instruction))
       ),
 
     shell_instruction: ($) =>
-      seq(
-        alias(/[sS][hH][eE][lL][lL]/, "SHELL"),
-        $._non_newline_whitespace,
-        $.string_array
-      ),
+      seq(alias(/[sS][hH][eE][lL][lL]/, "SHELL"), $.string_array),
 
     maintainer_instruction: ($) =>
       seq(
@@ -240,7 +215,7 @@ module.exports = grammar({
       ),
 
     image_name: ($) =>
-      repeat1(choice(token.immediate(/[^@:\s\$]+/), $.expansion)),
+      repeat1(choice(/[^@:\s\$]+/, $.expansion)),
 
     image_tag: ($) =>
       seq(
