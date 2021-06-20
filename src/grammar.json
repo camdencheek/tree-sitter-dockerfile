@@ -1502,8 +1502,8 @@
       "value": "\\s+"
     },
     {
-      "type": "STRING",
-      "value": "\\\n"
+      "type": "SYMBOL",
+      "name": "line_continuation"
     }
   ],
   "conflicts": [],
