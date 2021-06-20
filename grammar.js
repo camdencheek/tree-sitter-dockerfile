@@ -50,10 +50,7 @@ module.exports = grammar({
       ),
 
     label_instruction: ($) =>
-      seq(
-        alias(/[lL][aA][bB][eE][lL]/, "LABEL"),
-        repeat1($.label_pair)
-      ),
+      seq(alias(/[lL][aA][bB][eE][lL]/, "LABEL"), repeat1($.label_pair)),
 
     expose_instruction: ($) =>
       seq(
@@ -214,8 +211,7 @@ module.exports = grammar({
         )
       ),
 
-    image_name: ($) =>
-      repeat1(choice(/[^@:\s\$]+/, $.expansion)),
+    image_name: ($) => repeat1(choice(/[^@:\s\$]+/, $.expansion)),
 
     image_tag: ($) =>
       seq(
@@ -298,6 +294,6 @@ module.exports = grammar({
 
     _non_newline_whitespace: ($) => /[\t ]+/,
 
-    comment: ($) => seq("#", /.*/),
+    comment: ($) => /#.*/,
   },
 });
