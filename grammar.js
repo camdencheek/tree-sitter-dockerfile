@@ -1,10 +1,10 @@
 module.exports = grammar({
   name: "dockerfile",
 
-  extras: ($) => [$.comment, /\s+/, "\\\n"],
+  extras: ($) => [/\s+/, "\\\n"],
 
   rules: {
-    source_file: ($) => repeat(seq($._instruction, "\n")),
+    source_file: ($) => repeat(seq(choice($._instruction, $.comment), "\n")),
 
     _instruction: ($) =>
       choice(

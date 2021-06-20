@@ -603,6 +603,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "copy_instruction",
           "named": true
         },

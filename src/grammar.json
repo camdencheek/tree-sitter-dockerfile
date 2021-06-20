@@ -7,8 +7,17 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "_instruction"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_instruction"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              }
+            ]
           },
           {
             "type": "STRING",
@@ -1488,10 +1497,6 @@
     }
   },
   "extras": [
-    {
-      "type": "SYMBOL",
-      "name": "comment"
-    },
     {
       "type": "PATTERN",
       "value": "\\s+"
