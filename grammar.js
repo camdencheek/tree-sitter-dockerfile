@@ -248,13 +248,17 @@ module.exports = grammar({
       seq(
         $.shell_fragment,
         repeat(
-          seq($.line_continuation, repeat($._comment_line), $.shell_fragment)
+          seq(
+            alias($.required_line_continuation, $.line_continuation),
+            repeat($._comment_line), $.shell_fragment
+          )
         )
       ),
 
     shell_fragment: ($) => repeat1(choice(/[^\\\[\n#\s][^\\\n]*/, /\\[^\n]/)),
 
     line_continuation: ($) => "\\\n",
+    required_line_continuation: ($) => "\\\n",
 
     _comment_line: ($) => seq(alias($._anon_comment, $.comment), "\n"),
 
