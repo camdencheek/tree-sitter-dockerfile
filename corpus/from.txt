@@ -71,3 +71,18 @@ FROM sourcegraph/alpine:3.12@sha256:ce099fbcd3cf70b338fc4cb2a4e1fa9ae847de21afdb
 		    digest: (image_digest))
 		as: (image_alias)))
 
+==================
+From with param
+==================
+
+FROM --platform=linux/arm64 alpine-${VERSION}-z
+
+---
+
+(source_file
+  (from_instruction
+    (param)
+    (image_spec
+      (image_name
+        (expansion
+          (variable))))))

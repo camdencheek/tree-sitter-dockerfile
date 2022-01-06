@@ -211,7 +211,10 @@ module.exports = grammar({
         )
       ),
 
-    image_name: ($) => repeat1(choice(/[^@:\s\$]+/, $.expansion)),
+    image_name: ($) => seq(
+      choice(/[^@:\s\$-]/, $.expansion),
+      repeat(choice(/[^@:\s\$]+/, $.expansion))
+    ),
 
     image_tag: ($) =>
       seq(
