@@ -858,21 +858,29 @@
           }
         },
         {
-          "type": "FIELD",
-          "name": "value",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "double_quoted_string"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "unquoted_string"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "value",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "double_quoted_string"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "unquoted_string"
+                  }
+                ]
               }
-            ]
-          }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -1045,20 +1053,38 @@
       ]
     },
     "image_name": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "[^@:\\s\\$]+"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expansion"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[^@:\\s\\$-]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expansion"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[^@:\\s\\$]+"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expansion"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     "image_tag": {
       "type": "SEQ",
@@ -1235,8 +1261,13 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "line_continuation"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "required_line_continuation"
+                },
+                "named": true,
+                "value": "line_continuation"
               },
               {
                 "type": "REPEAT",
@@ -1271,6 +1302,10 @@
       }
     },
     "line_continuation": {
+      "type": "STRING",
+      "value": "\\\n"
+    },
+    "required_line_continuation": {
       "type": "STRING",
       "value": "\\\n"
     },

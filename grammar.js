@@ -180,7 +180,7 @@ module.exports = grammar({
       seq(
         field("name", $._env_key),
         token.immediate("="),
-        field("value", choice($.double_quoted_string, $.unquoted_string))
+        optional(field("value", choice($.double_quoted_string, $.unquoted_string)))
       ),
 
     _spaced_env_pair: ($) =>
