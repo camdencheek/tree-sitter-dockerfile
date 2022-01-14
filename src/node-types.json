@@ -165,7 +165,7 @@
       },
       "value": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "double_quoted_string",
@@ -407,6 +407,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "line_continuation",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "maintainer_instruction",
@@ -911,6 +916,10 @@
     "named": false
   },
   {
+    "type": "\\\n",
+    "named": false
+  },
+  {
     "type": "\\ ",
     "named": false
   },
@@ -920,10 +929,6 @@
   },
   {
     "type": "escape_sequence",
-    "named": true
-  },
-  {
-    "type": "line_continuation",
     "named": true
   },
   {
