@@ -38,3 +38,40 @@ RUN echo hello \
 			(comment)
 			(comment)
 			(shell_fragment))))
+
+==================
+Run with immediate line continuation
+==================
+
+RUN \
+	# comment
+	world
+
+---
+
+(source_file
+	(run_instruction
+        (line_continuation)
+		(shell_command
+			(comment)
+			(shell_fragment))))
+
+==================
+Run with immediate continuation and comment
+==================
+
+RUN \
+  echo foo \
+  # comment
+  echo foo
+
+---
+
+(source_file
+	(run_instruction
+        (line_continuation)
+		(shell_command
+            (shell_fragment)
+            (line_continuation)
+			(comment)
+			(shell_fragment))))

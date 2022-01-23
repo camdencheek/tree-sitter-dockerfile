@@ -1252,6 +1252,13 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_comment_line"
+          }
+        },
+        {
           "type": "SYMBOL",
           "name": "shell_fragment"
         },
