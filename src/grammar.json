@@ -925,7 +925,7 @@
       "type": "ALIAS",
       "content": {
         "type": "PATTERN",
-        "value": "[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]"
+        "value": "[a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?"
       },
       "named": true,
       "value": "unquoted_string"
