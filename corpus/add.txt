@@ -25,3 +25,16 @@ ADD --chown=a:b /src ./dst
 		(path)
 		(path)))
 
+==================
+Multiple files
+==================
+
+ADD src1 src2 dst
+
+---
+
+(source_file
+  (add_instruction
+    (path)
+    (path)
+    (path)))
