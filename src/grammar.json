@@ -332,12 +332,20 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "path"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_non_newline_whitespace"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "path"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_non_newline_whitespace"
+              }
+            ]
+          }
         },
         {
           "type": "SYMBOL",
@@ -370,12 +378,20 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "path"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_non_newline_whitespace"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "path"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_non_newline_whitespace"
+              }
+            ]
+          }
         },
         {
           "type": "SYMBOL",
