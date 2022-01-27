@@ -68,8 +68,9 @@ module.exports = grammar({
       seq(
         alias(/[aA][dD][dD]/, "ADD"),
         optional($.param),
-        $.path,
-        $._non_newline_whitespace,
+        repeat1(
+          seq($.path, $._non_newline_whitespace)
+        ),
         $.path
       ),
 
@@ -77,8 +78,9 @@ module.exports = grammar({
       seq(
         alias(/[cC][oO][pP][yY]/, "COPY"),
         optional($.param),
-        $.path,
-        $._non_newline_whitespace,
+        repeat1(
+          seq($.path, $._non_newline_whitespace)
+        ),
         $.path
       ),
 

@@ -25,3 +25,16 @@ COPY --chown=a:b /src ./dst
 		(path)
 		(path)))
 
+==================
+Multiple files
+==================
+
+COPY src1 src2 dst
+
+---
+
+(source_file
+  (copy_instruction
+    (path)
+    (path)
+    (path)))
