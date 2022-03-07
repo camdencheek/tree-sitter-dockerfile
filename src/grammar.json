@@ -541,7 +541,7 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "[a-z][-a-z0-9_]*"
+            "value": "([a-z][-a-z0-9_]*|[0-9]+)"
           },
           {
             "type": "SYMBOL",
