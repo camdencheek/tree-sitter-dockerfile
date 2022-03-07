@@ -112,7 +112,7 @@ module.exports = grammar({
       ),
 
     _user_name_or_group: ($) =>
-      repeat1(choice(/[a-z][-a-z0-9_]*/, $.expansion)),
+      repeat1(choice(/([a-z][-a-z0-9_]*|[0-9]+)/, $.expansion)),
 
     workdir_instruction: ($) =>
       seq(alias(/[wW][oO][rR][kK][dD][iI][rR]/, "WORKDIR"), $.path),

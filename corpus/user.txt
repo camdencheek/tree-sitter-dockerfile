@@ -23,4 +23,15 @@ USER foo:bar
 		user: (unquoted_string)
 		group: (unquoted_string)))
 		
+==================
+Numerical
+==================
 
+USER 1004:1004
+
+---
+
+(source_file
+	(user_instruction
+		user: (unquoted_string)
+		group: (unquoted_string)))
