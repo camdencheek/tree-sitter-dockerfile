@@ -22,7 +22,7 @@ USER foo:bar
 	(user_instruction
 		user: (unquoted_string)
 		group: (unquoted_string)))
-		
+
 ==================
 Numerical
 ==================
@@ -35,3 +35,15 @@ USER 1004:1004
 	(user_instruction
 		user: (unquoted_string)
 		group: (unquoted_string)))
+
+===========================
+No spaces in user:group
+===========================
+
+USER a: b
+
+---
+
+(source_file
+  (ERROR
+    (unquoted_string)))
