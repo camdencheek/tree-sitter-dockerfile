@@ -86,3 +86,111 @@ FROM --platform=linux/arm64 alpine-${VERSION}-z
       (image_name
         (expansion
           (variable))))))
+
+======================================================
+No spaces in image name
+======================================================
+
+FROM a b c
+
+---
+
+(source_file
+  (ERROR
+    (from_instruction
+      (image_spec
+	(image_name)))))
+
+======================================================
+No spaces in image name before expansion
+======================================================
+
+FROM a $b
+
+---
+
+(source_file
+  (from_instruction
+    (ERROR)
+    (image_spec
+      (image_name
+	(expansion
+	  (variable))))))
+
+======================================================
+No spaces in image name expansion
+======================================================
+
+FROM $ X
+
+---
+
+(source_file
+  (ERROR))
+
+======================================================
+No spaces in image tag expansion
+======================================================
+
+FROM a: $B
+
+---
+
+(source_file
+  (from_instruction
+    (ERROR
+      (image_name))
+    (image_spec
+      (image_name
+	(expansion
+	  (variable))))))
+
+======================================================
+No spaces in image digest
+======================================================
+
+FROM a:b@ $c
+
+---
+
+(source_file
+  (from_instruction
+    (ERROR
+      (image_name)
+      (image_tag))
+    (image_spec
+      (image_name
+	(expansion
+	  (variable))))))
+
+======================================================
+No spaces in image alias
+======================================================
+
+FROM a AS b c
+
+---
+
+(source_file
+  (ERROR
+    (from_instruction
+      (image_spec
+	(image_name))
+      (image_alias))))
+
+======================================================
+No spaces in image alias expansion
+======================================================
+
+FROM a AS b $C
+
+---
+
+(source_file
+  (from_instruction
+    (image_spec
+      (image_name))
+    (ERROR)
+    (image_alias
+      (expansion
+	(variable)))))

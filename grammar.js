@@ -106,13 +106,27 @@ module.exports = grammar({
         optional(
           seq(
             token.immediate(":"),
-            field("group", alias($._user_name_or_group, $.unquoted_string))
+            field("group",
+                  alias($._immediate_user_name_or_group, $.unquoted_string))
           )
         )
       ),
 
     _user_name_or_group: ($) =>
-      repeat1(choice(/([a-z][-a-z0-9_]*|[0-9]+)/, $.expansion)),
+      seq(
+        choice(/([a-z][-a-z0-9_]*|[0-9]+)/, $.expansion),
+        repeat($._immediate_user_name_or_group_fragment)
+      ),
+
+    // same as _user_name_or_group but sticks to previous token
+    _immediate_user_name_or_group: ($) =>
+      repeat1($._immediate_user_name_or_group_fragment),
+
+    _immediate_user_name_or_group_fragment: ($) =>
+      choice(
+        token.immediate(/([a-z][-a-z0-9_]*|[0-9]+)/),
+        $._immediate_expansion
+      ),
 
     workdir_instruction: ($) =>
       seq(alias(/[wW][oO][rR][kK][dD][iI][rR]/, "WORKDIR"), $.path),
@@ -138,7 +152,11 @@ module.exports = grammar({
         $._stopsignal_value
       ),
 
-    _stopsignal_value: ($) => repeat1(choice(/[A-Z0-9]+/, $.expansion)),
+    _stopsignal_value: ($) =>
+      seq(
+        choice(/[A-Z0-9]+/, $.expansion),
+        repeat(choice(token.immediate(/[A-Z0-9]+/), $._immediate_expansion))
+      ),
 
     healthcheck_instruction: ($) =>
       seq(
@@ -170,13 +188,28 @@ module.exports = grammar({
           /[^-\s\$]/, // cannot start with a '-' to avoid conflicts with params
           $.expansion
         ),
-        repeat(choice(/[^\s\$]+/, $.expansion))
+        repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
       ),
 
-    expansion: ($) =>
-      seq("$", choice($.variable, seq("{", alias(/[^\}]+/, $.variable), "}"))),
+    expansion: $ =>
+      seq("$", $._expansion_body),
 
-    variable: ($) => /[a-zA-Z][a-zA-Z0-9_]*/,
+    // we have 2 rules b/c aliases don't work as expected on seq() directly
+    _immediate_expansion: $ => alias($._imm_expansion, $.expansion),
+    _imm_expansion: $ =>
+      seq(token.immediate("$"), $._expansion_body),
+
+    _expansion_body: $ =>
+      choice(
+        $.variable,
+        seq(
+          token.immediate("{"),
+          alias(token.immediate(/[^\}]+/), $.variable),
+          token.immediate("}")
+        )
+      ),
+
+    variable: ($) => token.immediate(/[a-zA-Z][a-zA-Z0-9_]*/),
 
     env_pair: ($) =>
       seq(
@@ -218,19 +251,19 @@ module.exports = grammar({
     image_name: ($) =>
       seq(
         choice(/[^@:\s\$-]/, $.expansion),
-        repeat(choice(/[^@:\s\$]+/, $.expansion))
+        repeat(choice(token.immediate(/[^@:\s\$]+/), $._immediate_expansion))
       ),
 
     image_tag: ($) =>
       seq(
         token.immediate(":"),
-        repeat1(choice(token.immediate(/[^@\s\$]+/), $.expansion))
+        repeat1(choice(token.immediate(/[^@\s\$]+/), $._immediate_expansion))
       ),
 
     image_digest: ($) =>
       seq(
         token.immediate("@"),
-        repeat1(choice(token.immediate(/[a-zA-Z0-9:]+/), $.expansion))
+        repeat1(choice(token.immediate(/[a-zA-Z0-9:]+/), $._immediate_expansion))
       ),
 
     param: ($) =>
@@ -241,7 +274,10 @@ module.exports = grammar({
         field("value", token.immediate(/[^\s]+/))
       ),
 
-    image_alias: ($) => repeat1(choice(/[-a-zA-Z0-9_]+/, $.expansion)),
+    image_alias: ($) => seq(
+      choice(/[-a-zA-Z0-9_]+/, $.expansion),
+      repeat(choice(token.immediate(/[-a-zA-Z0-9_]+/), $._immediate_expansion))
+    ),
 
     string_array: ($) =>
       seq(
@@ -278,7 +314,11 @@ module.exports = grammar({
       seq(
         '"',
         repeat(
-          choice(token.immediate(/[^"\n\\\$]+/), $.escape_sequence, $.expansion)
+          choice(
+            token.immediate(/[^"\n\\\$]+/),
+            $.escape_sequence,
+            $._immediate_expansion
+          )
         ),
         '"'
       ),
@@ -288,7 +328,7 @@ module.exports = grammar({
         choice(
           token.immediate(/[^\s\n\"\\\$]+/),
           token.immediate("\\ "),
-          $.expansion
+          $._immediate_expansion
         )
       ),
 
