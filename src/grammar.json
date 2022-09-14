@@ -1028,6 +1028,15 @@
               {
                 "type": "SYMBOL",
                 "name": "unquoted_string"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "shell_command"
+                },
+                "named": true,
+                "value": "unquoted_string"
               }
             ]
           }

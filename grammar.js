@@ -224,7 +224,12 @@ module.exports = grammar({
       seq(
         field("name", $._env_key),
         token.immediate(/\s+/),
-        field("value", choice($.double_quoted_string, $.unquoted_string))
+        field("value", 
+          choice(
+            $.double_quoted_string, 
+            $.unquoted_string, 
+            alias($.shell_command, $.unquoted_string)
+          ))
       ),
 
     _env_key: ($) =>
