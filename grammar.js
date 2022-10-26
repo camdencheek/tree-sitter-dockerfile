@@ -40,6 +40,12 @@ module.exports = grammar({
     run_instruction: ($) =>
       seq(
         alias(/[rR][uU][nN]/, "RUN"),
+        repeat(
+          choice(
+            $.param,
+            $.mount_param
+          )
+        ),
         choice($.string_array, $.shell_command)
       ),
 
@@ -266,6 +272,7 @@ module.exports = grammar({
         repeat1(choice(token.immediate(/[a-zA-Z0-9:]+/), $._immediate_expansion))
       ),
 
+    // Generic parsing of options passed right after an instruction name.
     param: ($) =>
       seq(
         "--",
@@ -273,6 +280,31 @@ module.exports = grammar({
         token.immediate("="),
         field("value", token.immediate(/[^\s]+/))
       ),
+
+    // Specific parsing of the --mount option e.g.
+    //
+    //   --mount=type=cache,target=/root/.cache/go-build
+    //
+    mount_param: ($) => seq(
+      "--",
+      field("name", token.immediate("mount")),
+      token.immediate("="),
+      field(
+        "value",
+        seq(
+          $.mount_param_param,
+          repeat(
+            seq(token.immediate(","), $.mount_param_param)
+          )
+        )
+      )
+    ),
+
+    mount_param_param: ($) => seq(
+      token.immediate(/[^\s=,]+/),
+      token.immediate("="),
+      token.immediate(/[^\s=,]+/)
+    ),
 
     image_alias: ($) => seq(
       choice(/[-a-zA-Z0-9_]+/, $.expansion),
@@ -301,7 +333,24 @@ module.exports = grammar({
         )
       ),
 
-    shell_fragment: ($) => repeat1(choice(/[^\\\[\n#\s][^\\\n]*/, /\\[^\n]/)),
+    shell_fragment: ($) => repeat1(
+      choice(
+        // A shell fragment is broken into the same tokens as other
+        // constructs because the lexer prefers the longer tokens
+        // when it has a choice. The example below shows the tokenization
+        // of the --mount parameter.
+        //
+        //   RUN --mount=foo=bar,baz=42 ls --all
+        //       ^^     ^   ^   ^   ^
+        //         ^^^^^ ^^^ ^^^ ^^^ ^^
+        //       |--------param-------|
+        //                              |--shell_command--|
+        //
+        /[,=-]/,
+        /[^\\\[\n#\s,=-][^\\\n]*/,
+        /\\[^\n,=-]/
+      )
+    ),
 
     line_continuation: ($) => "\\\n",
     required_line_continuation: ($) => "\\\n",
