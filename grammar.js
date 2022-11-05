@@ -209,7 +209,7 @@ module.exports = grammar({
         )
       ),
 
-    variable: ($) => token.immediate(/[a-zA-Z][a-zA-Z0-9_]*/),
+    variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
     env_pair: ($) =>
       seq(
@@ -228,7 +228,7 @@ module.exports = grammar({
       ),
 
     _env_key: ($) =>
-      alias(/[a-zA-Z]([a-zA-Z0-9_]*[a-zA-Z0-9])?/, $.unquoted_string),
+      alias(/[a-zA-Z_][a-zA-Z0-9_]*/, $.unquoted_string),
 
     expose_port: ($) => seq(/\d+/, optional(choice("/tcp", "/udp"))),
 
