@@ -419,6 +419,41 @@
     "fields": {}
   },
   {
+    "type": "mount_param",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "mount",
+            "named": false
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "mount_param_param",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "mount_param_param",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "onbuild_instruction",
     "named": true,
     "fields": {},
@@ -530,9 +565,17 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "mount_param",
+          "named": true
+        },
+        {
+          "type": "param",
+          "named": true
+        },
         {
           "type": "shell_command",
           "named": true
@@ -930,6 +973,10 @@
   {
     "type": "escape_sequence",
     "named": true
+  },
+  {
+    "type": "mount",
+    "named": false
   },
   {
     "type": "variable",
