@@ -57,3 +57,24 @@ run ["echo", "test"]
 		    (double_quoted_string)
 			(double_quoted_string))))
 
+==================
+Run with options
+==================
+
+run --mount=type=secret,id=aws,target=/root/.aws/credentials \
+    --security=insecure \
+  aws s3 cp s3://example.com
+
+---
+
+(source_file
+  (run_instruction
+    (mount_param
+      (mount_param_param)
+      (mount_param_param)
+      (mount_param_param))
+    (line_continuation)
+    (param)
+    (line_continuation)
+    (shell_command
+      (shell_fragment))))
