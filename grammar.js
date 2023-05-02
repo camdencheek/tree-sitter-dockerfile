@@ -120,7 +120,7 @@ module.exports = grammar({
 
     _user_name_or_group: ($) =>
       seq(
-        choice(/([a-z][-a-z0-9_]*|[0-9]+)/, $.expansion),
+        choice(/([a-zA-Z][-A-Za-z0-9_]*|[0-9]+)/, $.expansion),
         repeat($._immediate_user_name_or_group_fragment)
       ),
 
@@ -130,7 +130,7 @@ module.exports = grammar({
 
     _immediate_user_name_or_group_fragment: ($) =>
       choice(
-        token.immediate(/([a-z][-a-z0-9_]*|[0-9]+)/),
+        token.immediate(/([a-zA-Z][-a-zA-Z0-9_]*|[0-9]+)/),
         $._immediate_expansion
       ),
 
