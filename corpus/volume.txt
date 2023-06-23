@@ -49,8 +49,8 @@ VOLUME ["/test/myvol"]
 
 (source_file
 	(volume_instruction
-	    (string_array
-			(double_quoted_string))))
+	    (json_string_array
+			(json_string))))
 
 ==================
 Multiline array
@@ -63,7 +63,7 @@ VOLUME ["/test/myvol", \
 
 (source_file
 	(volume_instruction
-	    (string_array
-			(double_quoted_string)
+	    (json_string_array
+			(json_string)
 			(line_continuation)
-			(double_quoted_string))))
+			(json_string))))
