@@ -57,9 +57,7 @@ ENV KEY "expansions: $FOO ${BAR}"
   (env_instruction
     (env_pair
       (unquoted_string)
-      (double_quoted_string
-        (double_quoted_escape_sequence)
-        (double_quoted_escape_sequence))))
+      (double_quoted_string)))
   (env_instruction
     (env_pair
       (unquoted_string)
@@ -106,9 +104,7 @@ ENV KEY 'not escape sequences: \a \n'
   (env_instruction
     (env_pair
       (unquoted_string)
-      (single_quoted_string
-        (single_quoted_escape_sequence)
-        (single_quoted_escape_sequence)))))
+      (single_quoted_string))))
 
 ==========================
 Unquoted strings

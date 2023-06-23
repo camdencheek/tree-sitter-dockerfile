@@ -391,6 +391,7 @@ module.exports = grammar({
           choice(
             token.immediate(/[^"\n\\\$]+/),
             $.double_quoted_escape_sequence,
+            "\\",
             $._immediate_expansion
           )
         ),
@@ -404,7 +405,8 @@ module.exports = grammar({
         repeat(
           choice(
             token.immediate(/[^'\n\\]+/),
-            $.single_quoted_escape_sequence
+            $.single_quoted_escape_sequence,
+            "\\",
           )
         ),
         "'"
@@ -422,16 +424,14 @@ module.exports = grammar({
     double_quoted_escape_sequence: ($) => token.immediate(
       choice(
         "\\\\",
-        "\\\"",
-        "\\"
+        "\\\""
       )
     ),
 
     single_quoted_escape_sequence: ($) => token.immediate(
       choice(
         "\\\\",
-        "\\'",
-        "\\"
+        "\\'"
       )
     ),
 
