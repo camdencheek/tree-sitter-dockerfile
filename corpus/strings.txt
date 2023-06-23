@@ -15,10 +15,19 @@ CMD ["\b\f\n\r\t\u0ABC\u12Cd"]
       (json_string)))
   (cmd_instruction
     (json_string_array
-      (json_string)))
+      (json_string
+        (escape_sequence)
+        (escape_sequence))))
   (cmd_instruction
     (json_string_array
-      (json_string))))
+      (json_string
+        (escape_sequence)
+        (escape_sequence)
+        (escape_sequence)
+        (escape_sequence)
+        (escape_sequence)
+        (escape_sequence)
+        (escape_sequence)))))
 
 ==========================
 Double-quoted strings
@@ -48,12 +57,12 @@ ENV KEY "expansions: $FOO ${BAR}"
     (env_pair
       (unquoted_string)
       (double_quoted_string
-        (double_quoted_escape_sequence))))
+        (escape_sequence))))
   (env_instruction
     (env_pair
       (unquoted_string)
       (double_quoted_string
-        (double_quoted_escape_sequence))))
+        (escape_sequence))))
   (env_instruction
     (env_pair
       (unquoted_string)
@@ -94,13 +103,13 @@ ENV KEY 'not escape sequences: \a \n'
     (env_pair
       (unquoted_string)
       (single_quoted_string
-        (single_quoted_escape_sequence)
-        (single_quoted_escape_sequence))))
+        (escape_sequence)
+        (escape_sequence))))
   (env_instruction
     (env_pair
       (unquoted_string)
       (single_quoted_string
-        (single_quoted_escape_sequence))))
+        (escape_sequence))))
   (env_instruction
     (env_pair
       (unquoted_string)

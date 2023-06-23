@@ -382,7 +382,20 @@ module.exports = grammar({
     // Note that JSON strings are different from the other double-quoted
     // strings. They don't support $-expansions.
     // Convenient reference: https://www.json.org/
-    json_string: ($) => /"(?:[^"\\]|\\(?:["\\/bfnrt]|u[0-9A-Fa-f]{4}))*"/,
+    json_string: ($) => seq(
+      '"',
+      repeat(
+        choice(
+          token.immediate(/[^"\\]+/),
+          alias($.json_escape_sequence, $.escape_sequence)
+        )
+      ),
+      '"'
+    ),
+
+    json_escape_sequence: ($) => token.immediate(
+      /\\(?:["\\/bfnrt]|u[0-9A-Fa-f]{4})/
+    ),
 
     double_quoted_string: ($) =>
       seq(
@@ -390,7 +403,7 @@ module.exports = grammar({
         repeat(
           choice(
             token.immediate(/[^"\n\\\$]+/),
-            $.double_quoted_escape_sequence,
+            alias($.double_quoted_escape_sequence, $.escape_sequence),
             "\\",
             $._immediate_expansion
           )
@@ -405,7 +418,7 @@ module.exports = grammar({
         repeat(
           choice(
             token.immediate(/[^'\n\\]+/),
-            $.single_quoted_escape_sequence,
+            alias($.single_quoted_escape_sequence, $.escape_sequence),
             "\\",
           )
         ),
