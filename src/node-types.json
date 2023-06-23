@@ -31,6 +31,10 @@
             "named": true
           },
           {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
             "type": "unquoted_string",
             "named": true
           }
@@ -57,11 +61,11 @@
       "required": true,
       "types": [
         {
-          "type": "shell_command",
+          "type": "json_string_array",
           "named": true
         },
         {
-          "type": "string_array",
+          "type": "shell_command",
           "named": true
         }
       ]
@@ -124,11 +128,11 @@
       "required": true,
       "types": [
         {
-          "type": "shell_command",
+          "type": "json_string_array",
           "named": true
         },
         {
-          "type": "string_array",
+          "type": "shell_command",
           "named": true
         }
       ]
@@ -169,6 +173,10 @@
         "types": [
           {
             "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
             "named": true
           },
           {
@@ -364,6 +372,36 @@
     }
   },
   {
+    "type": "json_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "json_string_array",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "json_string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "label_instruction",
     "named": true,
     "fields": {},
@@ -398,6 +436,10 @@
         "types": [
           {
             "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
             "named": true
           },
           {
@@ -569,6 +611,10 @@
       "required": true,
       "types": [
         {
+          "type": "json_string_array",
+          "named": true
+        },
+        {
           "type": "mount_param",
           "named": true
         },
@@ -578,10 +624,6 @@
         },
         {
           "type": "shell_command",
-          "named": true
-        },
-        {
-          "type": "string_array",
           "named": true
         }
       ]
@@ -624,7 +666,22 @@
       "required": true,
       "types": [
         {
-          "type": "string_array",
+          "type": "json_string_array",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "single_quoted_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
           "named": true
         }
       ]
@@ -737,21 +794,6 @@
     }
   },
   {
-    "type": "string_array",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "double_quoted_string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "unquoted_string",
     "named": true,
     "fields": {},
@@ -801,11 +843,11 @@
       "required": true,
       "types": [
         {
-          "type": "path",
+          "type": "json_string_array",
           "named": true
         },
         {
-          "type": "string_array",
+          "type": "path",
           "named": true
         }
       ]
@@ -840,6 +882,10 @@
   },
   {
     "type": "$",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -956,6 +1002,10 @@
   },
   {
     "type": "[",
+    "named": false
+  },
+  {
+    "type": "\\",
     "named": false
   },
   {
