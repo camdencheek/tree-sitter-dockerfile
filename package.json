@@ -13,5 +13,19 @@
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.20.1"
-  }
+  },
+  "tree-sitter": [
+    {
+      "file-types": [
+        "Dockerfile",
+        "dockerfile",
+        "docker",
+        "Containerfile",
+        "container"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ]
 }

@@ -8,7 +8,7 @@ SHELL ["powershell","-command"]
 
 (source_file
 	(shell_instruction
-		(string_array
-			(double_quoted_string)
-			(double_quoted_string))))
+		(json_string_array
+			(json_string)
+			(json_string))))
 

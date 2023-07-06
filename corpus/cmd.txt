@@ -41,7 +41,7 @@ cmd []
 
 (source_file
 	(cmd_instruction
-	    (string_array)))
+	    (json_string_array)))
 
 ==================
 Run with shell array
@@ -52,8 +52,8 @@ cmd ["echo", "test"]
 ---
 
 (source_file
-	(cmd_instruction
-	    (string_array
-		    (double_quoted_string)
-			(double_quoted_string))))
+  (cmd_instruction
+    (json_string_array
+      (json_string)
+      (json_string))))
 
