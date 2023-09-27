@@ -255,7 +255,11 @@ module.exports = grammar({
 
     label_pair: ($) =>
       seq(
-        field("key", alias(/[-a-zA-Z0-9\._]+/, $.unquoted_string)),
+        field("key", choice(
+          alias(/[-a-zA-Z0-9\._]+/, $.unquoted_string),
+          $.double_quoted_string,
+          $.single_quoted_string
+        )),
         token.immediate("="),
         field("value",
               choice(

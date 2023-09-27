@@ -93,5 +93,17 @@ USER foo$FOO:bar$BAR
 		group: (unquoted_string
 			(expansion
 				(variable)))))
-		
 
+==================
+Quoted key
+==================
+
+LABEL "key"="value"
+
+---
+
+(source_file
+	(label_instruction
+		(label_pair
+			key: (double_quoted_string)
+			value: (double_quoted_string))))
