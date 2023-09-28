@@ -4,7 +4,10 @@
   "description": "A tree-sitter module for the Dockerfile grammar",
   "main": "bindings/node",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tree-sitter generate && node-gyp build",
+    "lint": "eslint grammar.js",
+    "test": "tree-sitter test",
+    "test-windows": "tree-sitter test"
   },
   "author": "Camden Cheek <camden@ccheek.com>",
   "license": "ISC",
@@ -12,6 +15,9 @@
     "nan": "^2.14.2"
   },
   "devDependencies": {
+    "eslint": "^8.45.0",
+    "eslint-config-google": "^0.14.0",
+    "node-gyp": "^9.4.0",
     "tree-sitter-cli": "^0.20.8"
   },
   "tree-sitter": [
