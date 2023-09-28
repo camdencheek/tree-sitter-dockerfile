@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tree-sitter generate && node-gyp build",
     "lint": "eslint grammar.js",
-    "test": "tree-sitter test",
+    "test": "tree-sitter test"
   },
   "author": "Camden Cheek <camden@ccheek.com>",
   "license": "ISC",
