@@ -23,7 +23,7 @@ jobs:
       - run: npm install
       - run: npm test
       - run: npm run lint
-      - run: npm run build && git diff-files --quiet
+      - run: npm run build && git diff-files --patch --exit-code
   test_windows:
     runs-on: windows-latest
     steps:
