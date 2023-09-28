@@ -4,7 +4,9 @@
   "description": "A tree-sitter module for the Dockerfile grammar",
   "main": "bindings/node",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "generate": "npx tree-sitter generate",
+    "parse": "npx tree-sitter parse",
+    "test": "npm run generate && npx tree-sitter test"
   },
   "author": "Camden Cheek <camden@ccheek.com>",
   "license": "ISC",

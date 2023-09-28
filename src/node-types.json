@@ -646,10 +646,6 @@
       "required": true,
       "types": [
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "line_continuation",
           "named": true
         },
@@ -713,10 +709,6 @@
         },
         {
           "type": "cmd_instruction",
-          "named": true
-        },
-        {
-          "type": "comment",
           "named": true
         },
         {
@@ -882,10 +874,6 @@
   },
   {
     "type": "\"",
-    "named": false
-  },
-  {
-    "type": "#",
     "named": false
   },
   {

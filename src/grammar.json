@@ -7,17 +7,8 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_instruction"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "comment"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_instruction"
           },
           {
             "type": "STRING",
@@ -1473,13 +1464,6 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_comment_line"
-          }
-        },
-        {
           "type": "SYMBOL",
           "name": "shell_fragment"
         },
@@ -1496,13 +1480,6 @@
                 },
                 "named": true,
                 "value": "line_continuation"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_comment_line"
-                }
               },
               {
                 "type": "SYMBOL",
@@ -1540,37 +1517,6 @@
     "required_line_continuation": {
       "type": "STRING",
       "value": "\\\n"
-    },
-    "_comment_line": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_anon_comment"
-          },
-          "named": true,
-          "value": "comment"
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
-        }
-      ]
-    },
-    "_anon_comment": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "#"
-        },
-        {
-          "type": "PATTERN",
-          "value": ".*"
-        }
-      ]
     },
     "json_string_array": {
       "type": "SEQ",
@@ -1811,8 +1757,12 @@
       "value": "[\\t ]+"
     },
     "comment": {
-      "type": "PATTERN",
-      "value": "#.*"
+      "type": "PREC_LEFT",
+      "value": -1,
+      "content": {
+        "type": "PATTERN",
+        "value": "#.*"
+      }
     }
   },
   "extras": [
@@ -1823,6 +1773,10 @@
     {
       "type": "SYMBOL",
       "name": "line_continuation"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "comment"
     }
   ],
   "conflicts": [],
