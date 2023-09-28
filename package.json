@@ -4,7 +4,7 @@
   "description": "A tree-sitter module for the Dockerfile grammar",
   "main": "bindings/node",
   "scripts": {
-    "build": "tree-sitter generate && node-gyp build",
+    "build": "tree-sitter generate",
     "lint": "eslint grammar.js",
     "test": "tree-sitter test"
   },
