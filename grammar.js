@@ -73,7 +73,7 @@ module.exports = grammar({
     add_instruction: ($) =>
       seq(
         alias(/[aA][dD][dD]/, "ADD"),
-        optional($.param),
+        repeat($.param),
         repeat1(
           seq($.path, $._non_newline_whitespace)
         ),
@@ -83,7 +83,7 @@ module.exports = grammar({
     copy_instruction: ($) =>
       seq(
         alias(/[cC][oO][pP][yY]/, "COPY"),
-        optional($.param),
+        repeat($.param),
         repeat1(
           seq($.path, $._non_newline_whitespace)
         ),
