@@ -2,6 +2,13 @@ module.exports = grammar({
   name: "dockerfile",
 
   extras: ($) => [/\s+/, $.line_continuation],
+  externals: ($) => [
+    $.heredoc_marker,
+    $.heredoc_line,
+    $.heredoc_end,
+    $.heredoc_nl,
+    $.error_sentinel,
+  ],
 
   rules: {
     source_file: ($) => repeat(seq(choice($._instruction, $.comment), "\n")),
@@ -26,7 +33,7 @@ module.exports = grammar({
         $.healthcheck_instruction,
         $.shell_instruction,
         $.maintainer_instruction,
-        $.cross_build_instruction
+        $.cross_build_instruction,
       ),
 
     from_instruction: ($) =>
@@ -46,7 +53,8 @@ module.exports = grammar({
             $.mount_param
           )
         ),
-        choice($.json_string_array, $.shell_command)
+        choice($.json_string_array, $.shell_command),
+        repeat($.heredoc_block)
       ),
 
     cmd_instruction: ($) =>
@@ -73,21 +81,23 @@ module.exports = grammar({
     add_instruction: ($) =>
       seq(
         alias(/[aA][dD][dD]/, "ADD"),
-        optional($.param),
+        repeat($.param),
         repeat1(
-          seq($.path, $._non_newline_whitespace)
+          seq(alias($.path_with_heredoc, $.path), $._non_newline_whitespace)
         ),
-        $.path
+        alias($.path_with_heredoc, $.path),
+        repeat($.heredoc_block)
       ),
 
     copy_instruction: ($) =>
       seq(
         alias(/[cC][oO][pP][yY]/, "COPY"),
-        optional($.param),
+        repeat($.param),
         repeat1(
-          seq($.path, $._non_newline_whitespace)
+          seq(alias($.path_with_heredoc, $.path), $._non_newline_whitespace)
         ),
-        $.path
+        alias($.path_with_heredoc, $.path),
+        repeat($.heredoc_block)
       ),
 
     entrypoint_instruction: ($) =>
@@ -193,13 +203,39 @@ module.exports = grammar({
         /.*/
       ),
 
+    heredoc_block: ($) =>
+      seq(
+        // A heredoc block starts with a line break after the instruction it
+        // belongs to. The herdoc_nl token is a special token that only matches
+        // \n if there's at least one open heredoc to avoid conflicts.
+        // We also alias this token to hide it from the output like all other
+        // whitespace.
+        alias($.heredoc_nl, "_heredoc_nl"),
+        repeat(seq($.heredoc_line, "\n")),
+        $.heredoc_end
+      ),
+
     path: ($) =>
       seq(
         choice(
-          /[^-\s\$]/, // cannot start with a '-' to avoid conflicts with params
+          /[^-\s\$<]/, // cannot start with a '-' to avoid conflicts with params
+          /<[^<]/, // cannot start with a '<<' to avoid conflicts with heredocs (a single < is fine, though)
           $.expansion
         ),
         repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
+      ),
+
+    path_with_heredoc: ($) =>
+      choice(
+        $.heredoc_marker,
+        seq(
+          choice(
+            /[^-\s\$<]/, // cannot start with a '-' to avoid conflicts with params
+            /<[^-\s\$<]/,
+            $.expansion
+          ),
+          repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
+        )
       ),
 
     expansion: $ =>
@@ -361,9 +397,11 @@ module.exports = grammar({
         //       |--------param-------|
         //                              |--shell_command--|
         //
+        seq($.heredoc_marker, /[ \t]*/),
         /[,=-]/,
-        /[^\\\[\n#\s,=-][^\\\n]*/,
-        /\\[^\n,=-]/
+        /[^\\\[\n#\s,=-][^\\\n<]*/,
+        /\\[^\n,=-]/,
+        /<[^<]/,
       )
     ),
 
@@ -452,7 +490,7 @@ module.exports = grammar({
       )
     ),
 
-    _non_newline_whitespace: ($) => /[\t ]+/,
+    _non_newline_whitespace: ($) => token.immediate(/[\t ]+/),
 
     comment: ($) => /#.*/,
   },

@@ -38,3 +38,18 @@ ADD src1 src2 dst
     (path)
     (path)
     (path)))
+
+==================
+Multiple params
+==================
+
+ADD --chown=a:b --chmod=644 src dst
+
+---
+
+(source_file
+  (add_instruction
+    (param)
+    (param)
+    (path)
+    (path)))
