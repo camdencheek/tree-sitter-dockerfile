@@ -2,6 +2,12 @@ module.exports = grammar({
   name: "dockerfile",
 
   extras: ($) => [/\s+/, $.line_continuation],
+  externals: ($) => [
+    $.heredoc_marker,
+    $.heredoc_content,
+    $.heredoc_end,
+    $.error_sentinel,
+  ],
 
   rules: {
     source_file: ($) => repeat(seq(choice($._instruction, $.comment), "\n")),
@@ -26,7 +32,8 @@ module.exports = grammar({
         $.healthcheck_instruction,
         $.shell_instruction,
         $.maintainer_instruction,
-        $.cross_build_instruction
+        $.cross_build_instruction,
+        $.heredoc_block
       ),
 
     from_instruction: ($) =>
@@ -75,9 +82,9 @@ module.exports = grammar({
         alias(/[aA][dD][dD]/, "ADD"),
         repeat($.param),
         repeat1(
-          seq($.path, $._non_newline_whitespace)
+          seq(alias($.path_with_heredoc, $.path), $._non_newline_whitespace)
         ),
-        $.path
+        alias($.path_with_heredoc, $.path)
       ),
 
     copy_instruction: ($) =>
@@ -85,9 +92,9 @@ module.exports = grammar({
         alias(/[cC][oO][pP][yY]/, "COPY"),
         repeat($.param),
         repeat1(
-          seq($.path, $._non_newline_whitespace)
+          seq(alias($.path_with_heredoc, $.path), $._non_newline_whitespace)
         ),
-        $.path
+        alias($.path_with_heredoc, $.path)
       ),
 
     entrypoint_instruction: ($) =>
@@ -193,13 +200,29 @@ module.exports = grammar({
         /.*/
       ),
 
+    heredoc_block: ($) => seq(repeat(seq($.heredoc_content, "\n")), $.heredoc_end),
+
     path: ($) =>
       seq(
         choice(
-          /[^-\s\$]/, // cannot start with a '-' to avoid conflicts with params
+          /[^-\s\$<]/, // cannot start with a '-' to avoid conflicts with params
+          /<[^-\s\$<]/,
           $.expansion
         ),
         repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
+      ),
+
+    path_with_heredoc: ($) =>
+      choice(
+        $.heredoc_marker,
+        seq(
+          choice(
+            /[^-\s\$<]/, // cannot start with a '-' to avoid conflicts with params
+            /<[^-\s\$<]/,
+            $.expansion
+          ),
+          repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
+        )
       ),
 
     expansion: $ =>
@@ -361,9 +384,11 @@ module.exports = grammar({
         //       |--------param-------|
         //                              |--shell_command--|
         //
+        $.heredoc_marker,
         /[,=-]/,
-        /[^\\\[\n#\s,=-][^\\\n]*/,
-        /\\[^\n,=-]/
+        /[^\\\[\n#\s,=-][^\\\n<]*/,
+        /\\[^\n,=-]/,
+        /<[^<]/,
       )
     ),
 
@@ -452,7 +477,7 @@ module.exports = grammar({
       )
     ),
 
-    _non_newline_whitespace: ($) => /[\t ]+/,
+    _non_newline_whitespace: ($) => token.immediate(/[\t ]+/),
 
     comment: ($) => /#.*/,
   },

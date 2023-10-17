@@ -276,6 +276,25 @@
     }
   },
   {
+    "type": "heredoc_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "heredoc_content",
+          "named": true
+        },
+        {
+          "type": "heredoc_end",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "image_alias",
     "named": true,
     "fields": {},
@@ -552,6 +571,10 @@
           "named": true
         },
         {
+          "type": "heredoc_block",
+          "named": true
+        },
+        {
           "type": "label_instruction",
           "named": true
         },
@@ -605,6 +628,10 @@
       "types": [
         {
           "type": "expansion",
+          "named": true
+        },
+        {
+          "type": "heredoc_marker",
           "named": true
         }
       ]
@@ -663,7 +690,17 @@
   {
     "type": "shell_fragment",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "heredoc_marker",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "shell_instruction",
@@ -745,6 +782,10 @@
         },
         {
           "type": "healthcheck_instruction",
+          "named": true
+        },
+        {
+          "type": "heredoc_block",
           "named": true
         },
         {
@@ -1030,6 +1071,18 @@
   },
   {
     "type": "escape_sequence",
+    "named": true
+  },
+  {
+    "type": "heredoc_content",
+    "named": true
+  },
+  {
+    "type": "heredoc_end",
+    "named": true
+  },
+  {
+    "type": "heredoc_marker",
     "named": true
   },
   {
