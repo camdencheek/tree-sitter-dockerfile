@@ -4,8 +4,9 @@ module.exports = grammar({
   extras: ($) => [/\s+/, $.line_continuation],
   externals: ($) => [
     $.heredoc_marker,
-    $.heredoc_content,
+    $.heredoc_line,
     $.heredoc_end,
+    $.heredoc_nl,
     $.error_sentinel,
   ],
 
@@ -33,7 +34,6 @@ module.exports = grammar({
         $.shell_instruction,
         $.maintainer_instruction,
         $.cross_build_instruction,
-        $.heredoc_block
       ),
 
     from_instruction: ($) =>
@@ -53,7 +53,8 @@ module.exports = grammar({
             $.mount_param
           )
         ),
-        choice($.json_string_array, $.shell_command)
+        choice($.json_string_array, $.shell_command),
+        repeat($.heredoc_block)
       ),
 
     cmd_instruction: ($) =>
@@ -84,7 +85,8 @@ module.exports = grammar({
         repeat1(
           seq(alias($.path_with_heredoc, $.path), $._non_newline_whitespace)
         ),
-        alias($.path_with_heredoc, $.path)
+        alias($.path_with_heredoc, $.path),
+        repeat($.heredoc_block)
       ),
 
     copy_instruction: ($) =>
@@ -94,7 +96,8 @@ module.exports = grammar({
         repeat1(
           seq(alias($.path_with_heredoc, $.path), $._non_newline_whitespace)
         ),
-        alias($.path_with_heredoc, $.path)
+        alias($.path_with_heredoc, $.path),
+        repeat($.heredoc_block)
       ),
 
     entrypoint_instruction: ($) =>
@@ -200,13 +203,23 @@ module.exports = grammar({
         /.*/
       ),
 
-    heredoc_block: ($) => seq(repeat(seq($.heredoc_content, "\n")), $.heredoc_end),
+    heredoc_block: ($) =>
+      seq(
+        // A heredoc block starts with a line break after the instruction it
+        // belongs to. The herdoc_nl token is a special token that only matches
+        // \n if there's at least one open heredoc to avoid conflicts.
+        // We also alias this token to hide it from the output like all other
+        // whitespace.
+        alias($.heredoc_nl, "_heredoc_nl"),
+        repeat(seq($.heredoc_line, "\n")),
+        $.heredoc_end
+      ),
 
     path: ($) =>
       seq(
         choice(
           /[^-\s\$<]/, // cannot start with a '-' to avoid conflicts with params
-          /<[^-\s\$<]/,
+          /<[^<]/, // cannot start with a '<<' to avoid conflicts with heredocs (a single < is fine, though)
           $.expansion
         ),
         repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
