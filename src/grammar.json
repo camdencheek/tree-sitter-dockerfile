@@ -104,10 +104,6 @@
         {
           "type": "SYMBOL",
           "name": "cross_build_instruction"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "heredoc_block"
         }
       ]
     },
@@ -211,6 +207,13 @@
               "name": "shell_command"
             }
           ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_block"
+          }
         }
       ]
     },
@@ -375,6 +378,13 @@
           },
           "named": true,
           "value": "path"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_block"
+          }
         }
       ]
     },
@@ -426,6 +436,13 @@
           },
           "named": true,
           "value": "path"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_block"
+          }
         }
       ]
     },
@@ -868,13 +885,22 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_nl"
+          },
+          "named": false,
+          "value": "_heredoc_nl"
+        },
+        {
           "type": "REPEAT",
           "content": {
             "type": "SEQ",
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "heredoc_content"
+                "name": "heredoc_line"
               },
               {
                 "type": "STRING",
@@ -901,7 +927,7 @@
             },
             {
               "type": "PATTERN",
-              "value": "<[^-\\s\\$<]"
+              "value": "<[^<]"
             },
             {
               "type": "SYMBOL",
@@ -1938,11 +1964,15 @@
     },
     {
       "type": "SYMBOL",
-      "name": "heredoc_content"
+      "name": "heredoc_line"
     },
     {
       "type": "SYMBOL",
       "name": "heredoc_end"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "heredoc_nl"
     },
     {
       "type": "SYMBOL",
@@ -1952,4 +1982,3 @@
   "inline": [],
   "supertypes": []
 }
-

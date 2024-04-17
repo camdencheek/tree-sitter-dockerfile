@@ -8,6 +8,10 @@
       "required": true,
       "types": [
         {
+          "type": "heredoc_block",
+          "named": true
+        },
+        {
           "type": "param",
           "named": true
         },
@@ -84,6 +88,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "heredoc_block",
+          "named": true
+        },
         {
           "type": "param",
           "named": true
@@ -284,11 +292,11 @@
       "required": true,
       "types": [
         {
-          "type": "heredoc_content",
+          "type": "heredoc_end",
           "named": true
         },
         {
-          "type": "heredoc_end",
+          "type": "heredoc_line",
           "named": true
         }
       ]
@@ -571,10 +579,6 @@
           "named": true
         },
         {
-          "type": "heredoc_block",
-          "named": true
-        },
-        {
           "type": "label_instruction",
           "named": true
         },
@@ -645,6 +649,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "heredoc_block",
+          "named": true
+        },
         {
           "type": "json_string_array",
           "named": true
@@ -782,10 +790,6 @@
         },
         {
           "type": "healthcheck_instruction",
-          "named": true
-        },
-        {
-          "type": "heredoc_block",
           "named": true
         },
         {
@@ -1070,15 +1074,19 @@
     "named": false
   },
   {
+    "type": "_heredoc_nl",
+    "named": false
+  },
+  {
     "type": "escape_sequence",
     "named": true
   },
   {
-    "type": "heredoc_content",
+    "type": "heredoc_end",
     "named": true
   },
   {
-    "type": "heredoc_end",
+    "type": "heredoc_line",
     "named": true
   },
   {
