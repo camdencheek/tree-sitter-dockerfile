@@ -36,6 +36,43 @@ COPY --from=build /dest /dest
     (path)))
 
 ==================
+Basic heredoc with space after marker
+==================
+
+FROM busybox AS build
+
+RUN <<EOF 
+echo "i am" >> /dest
+whoami >> /dest
+EOF
+
+FROM scratch
+COPY --from=build /dest /dest
+
+---
+
+(source_file
+  (from_instruction
+    (image_spec
+      (image_name))
+    (image_alias))
+  (run_instruction
+    (shell_command
+      (shell_fragment
+        (heredoc_marker)))
+    (heredoc_block
+      (heredoc_line)
+      (heredoc_line)
+      (heredoc_end)))
+  (from_instruction
+    (image_spec
+      (image_name)))
+  (copy_instruction
+    (param)
+    (path)
+    (path)))
+
+==================
 Run heredoc
 ==================
 

@@ -397,7 +397,7 @@ module.exports = grammar({
         //       |--------param-------|
         //                              |--shell_command--|
         //
-        $.heredoc_marker,
+        seq($.heredoc_marker, /[ \t]*/),
         /[,=-]/,
         /[^\\\[\n#\s,=-][^\\\n<]*/,
         /\\[^\n,=-]/,

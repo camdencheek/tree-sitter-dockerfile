@@ -172,8 +172,9 @@ static bool scan_marker(scanner_state *state, TSLexer *lexer) {
 
         // If we run out of space, stop recording the delimiter but keep
         // advancing the lexer to ensure that we at least parse the marker
-        // correctly.
-        if (del_idx >= del_space - 1) {
+        // correctly. Reserve two bytes: one for the strip indicator and
+        // one for the terminating null byte.
+        if (del_idx >= del_space - 2) {
             del_idx = 0;
         }
     }
