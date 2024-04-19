@@ -1195,7 +1195,7 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "\\d+"
+          "value": "\\d+(-\\d+)?"
         },
         {
           "type": "CHOICE",

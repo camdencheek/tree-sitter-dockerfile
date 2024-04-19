@@ -287,7 +287,7 @@ module.exports = grammar({
     _env_key: ($) =>
       alias(/[a-zA-Z_][a-zA-Z0-9_]*/, $.unquoted_string),
 
-    expose_port: ($) => seq(/\d+/, optional(choice("/tcp", "/udp"))),
+    expose_port: ($) => seq(/\d+(-\d+)?/, optional(choice("/tcp", "/udp"))),
 
     label_pair: ($) =>
       seq(
