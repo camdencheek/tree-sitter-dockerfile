@@ -188,13 +188,13 @@ module.exports = grammar({
     shell_instruction: ($) =>
       seq(alias(/[sS][hH][eE][lL][lL]/, "SHELL"), $.json_string_array),
 
-    maintainer_instruction: ($) =>
+    maintainer_instruction: () =>
       seq(
         alias(/[mM][aA][iI][nN][tT][aA][iI][nN][eE][rR]/, "MAINTAINER"),
         /.*/
       ),
 
-    cross_build_instruction: ($) =>
+    cross_build_instruction: () =>
       seq(
         alias(
           /[cC][rR][oO][sS][sS]_[bB][uU][iI][lL][dD][a-zA-Z_]*/,
@@ -256,7 +256,7 @@ module.exports = grammar({
         )
       ),
 
-    variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
+    variable: () => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
     env_pair: ($) =>
       seq(
@@ -287,7 +287,7 @@ module.exports = grammar({
     _env_key: ($) =>
       alias(/[a-zA-Z_][a-zA-Z0-9_]*/, $.unquoted_string),
 
-    expose_port: ($) => seq(/\d+(-\d+)?/, optional(choice("/tcp", "/udp"))),
+    expose_port: () => seq(/\d+(-\d+)?/, optional(choice("/tcp", "/udp"))),
 
     label_pair: ($) =>
       seq(
@@ -333,7 +333,7 @@ module.exports = grammar({
       ),
 
     // Generic parsing of options passed right after an instruction name.
-    param: ($) =>
+    param: () =>
       seq(
         "--",
         field("name", token.immediate(/[a-z][-a-z]*/)),
@@ -360,7 +360,7 @@ module.exports = grammar({
       )
     ),
 
-    mount_param_param: ($) => seq(
+    mount_param_param: () => seq(
       token.immediate(/[^\s=,]+/),
       token.immediate("="),
       token.immediate(/[^\s=,]+/)
@@ -405,12 +405,12 @@ module.exports = grammar({
       )
     ),
 
-    line_continuation: ($) => /\\[ \t]*\n/,
-    required_line_continuation: ($) => "\\\n",
+    line_continuation: () => /\\[ \t]*\n/,
+    required_line_continuation: () => "\\\n",
 
     _comment_line: ($) => seq(alias($._anon_comment, $.comment), "\n"),
 
-    _anon_comment: ($) => seq("#", /.*/),
+    _anon_comment: () => seq("#", /.*/),
 
     json_string_array: ($) =>
       seq(
@@ -435,7 +435,7 @@ module.exports = grammar({
       '"'
     ),
 
-    json_escape_sequence: ($) => token.immediate(
+    json_escape_sequence: () => token.immediate(
       /\\(?:["\\/bfnrt]|u[0-9A-Fa-f]{4})/
     ),
 
@@ -476,22 +476,22 @@ module.exports = grammar({
         )
       ),
 
-    double_quoted_escape_sequence: ($) => token.immediate(
+    double_quoted_escape_sequence: () => token.immediate(
       choice(
         "\\\\",
         "\\\""
       )
     ),
 
-    single_quoted_escape_sequence: ($) => token.immediate(
+    single_quoted_escape_sequence: () => token.immediate(
       choice(
         "\\\\",
         "\\'"
       )
     ),
 
-    _non_newline_whitespace: ($) => token.immediate(/[\t ]+/),
+    _non_newline_whitespace: () => token.immediate(/[\t ]+/),
 
-    comment: ($) => /#.*/,
+    comment: () => /#.*/,
   },
 });
