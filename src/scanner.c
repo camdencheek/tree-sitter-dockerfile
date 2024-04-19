@@ -6,6 +6,7 @@
 #include "tree_sitter/parser.h"
 
 #define MAX_HEREDOCS 10
+#define DEL_SPACE 512
 
 typedef struct {
     bool in_heredoc;
@@ -147,8 +148,7 @@ static bool scan_marker(scanner_state *state, TSLexer *lexer) {
     // usually only need a few bytes. We're also limited to less than 1024 bytes
     // by tree-sitter since our state has to fit in
     // TREE_SITTER_SERIALIZATION_BUFFER_SIZE.
-    const unsigned int del_space = 512;
-    char delimiter[del_space];
+    char delimiter[DEL_SPACE];
 
     // We start recording the actual string at position 1 since we store whether
     // it's a stripping heredoc in the first position (with either a dash or a
@@ -174,7 +174,7 @@ static bool scan_marker(scanner_state *state, TSLexer *lexer) {
         // advancing the lexer to ensure that we at least parse the marker
         // correctly. Reserve two bytes: one for the strip indicator and
         // one for the terminating null byte.
-        if (del_idx >= del_space - 2) {
+        if (del_idx >= DEL_SPACE - 2) {
             del_idx = 0;
         }
     }
