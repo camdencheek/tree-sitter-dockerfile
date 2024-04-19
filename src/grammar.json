@@ -207,6 +207,13 @@
               "name": "shell_command"
             }
           ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_block"
+          }
         }
       ]
     },
@@ -348,8 +355,13 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "path"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "path_with_heredoc"
+                },
+                "named": true,
+                "value": "path"
               },
               {
                 "type": "SYMBOL",
@@ -359,8 +371,20 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "path"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path_with_heredoc"
+          },
+          "named": true,
+          "value": "path"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_block"
+          }
         }
       ]
     },
@@ -389,8 +413,13 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "path"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "path_with_heredoc"
+                },
+                "named": true,
+                "value": "path"
               },
               {
                 "type": "SYMBOL",
@@ -400,8 +429,20 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "path"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path_with_heredoc"
+          },
+          "named": true,
+          "value": "path"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_block"
+          }
         }
       ]
     },
@@ -840,6 +881,40 @@
         }
       ]
     },
+    "heredoc_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "heredoc_nl"
+          },
+          "named": false,
+          "value": "_heredoc_nl"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "heredoc_line"
+              },
+              {
+                "type": "STRING",
+                "value": "\n"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "heredoc_end"
+        }
+      ]
+    },
     "path": {
       "type": "SEQ",
       "members": [
@@ -848,7 +923,11 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": "[^-\\s\\$]"
+              "value": "[^-\\s\\$<]"
+            },
+            {
+              "type": "PATTERN",
+              "value": "<[^<]"
             },
             {
               "type": "SYMBOL",
@@ -874,6 +953,56 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "path_with_heredoc": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "heredoc_marker"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[^-\\s\\$<]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "<[^-\\s\\$<]"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "expansion"
+                }
+              ]
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "IMMEDIATE_TOKEN",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[^\\s\\$]+"
+                    }
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_immediate_expansion"
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -1509,16 +1638,33 @@
         "type": "CHOICE",
         "members": [
           {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "heredoc_marker"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[ \\t]*"
+              }
+            ]
+          },
+          {
             "type": "PATTERN",
             "value": "[,=-]"
           },
           {
             "type": "PATTERN",
-            "value": "[^\\\\\\[\\n#\\s,=-][^\\\\\\n]*"
+            "value": "[^\\\\\\[\\n#\\s,=-][^\\\\\\n<]*"
           },
           {
             "type": "PATTERN",
             "value": "\\\\[^\\n,=-]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "<[^<]"
           }
         ]
       }
@@ -1797,8 +1943,11 @@
       }
     },
     "_non_newline_whitespace": {
-      "type": "PATTERN",
-      "value": "[\\t ]+"
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[\\t ]+"
+      }
     },
     "comment": {
       "type": "PATTERN",
@@ -1817,8 +1966,28 @@
   ],
   "conflicts": [],
   "precedences": [],
-  "externals": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "heredoc_marker"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "heredoc_line"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "heredoc_end"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "heredoc_nl"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "error_sentinel"
+    }
+  ],
   "inline": [],
   "supertypes": []
 }
-

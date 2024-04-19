@@ -8,6 +8,10 @@
       "required": true,
       "types": [
         {
+          "type": "heredoc_block",
+          "named": true
+        },
+        {
           "type": "param",
           "named": true
         },
@@ -84,6 +88,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "heredoc_block",
+          "named": true
+        },
         {
           "type": "param",
           "named": true
@@ -270,6 +278,25 @@
         },
         {
           "type": "param",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "heredoc_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "heredoc_end",
+          "named": true
+        },
+        {
+          "type": "heredoc_line",
           "named": true
         }
       ]
@@ -606,6 +633,10 @@
         {
           "type": "expansion",
           "named": true
+        },
+        {
+          "type": "heredoc_marker",
+          "named": true
         }
       ]
     }
@@ -618,6 +649,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "heredoc_block",
+          "named": true
+        },
         {
           "type": "json_string_array",
           "named": true
@@ -663,7 +698,17 @@
   {
     "type": "shell_fragment",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "heredoc_marker",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "shell_instruction",
@@ -1029,7 +1074,23 @@
     "named": false
   },
   {
+    "type": "_heredoc_nl",
+    "named": false
+  },
+  {
     "type": "escape_sequence",
+    "named": true
+  },
+  {
+    "type": "heredoc_end",
+    "named": true
+  },
+  {
+    "type": "heredoc_line",
+    "named": true
+  },
+  {
+    "type": "heredoc_marker",
     "named": true
   },
   {
