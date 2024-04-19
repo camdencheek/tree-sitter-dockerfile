@@ -1670,8 +1670,8 @@
       }
     },
     "line_continuation": {
-      "type": "STRING",
-      "value": "\\\n"
+      "type": "PATTERN",
+      "value": "\\\\[ \\t]*\\n"
     },
     "required_line_continuation": {
       "type": "STRING",
