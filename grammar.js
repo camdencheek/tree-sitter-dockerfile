@@ -405,7 +405,7 @@ module.exports = grammar({
       )
     ),
 
-    line_continuation: ($) => "\\\n",
+    line_continuation: ($) => /\\[ \t]*\n/,
     required_line_continuation: ($) => "\\\n",
 
     _comment_line: ($) => seq(alias($._anon_comment, $.comment), "\n"),

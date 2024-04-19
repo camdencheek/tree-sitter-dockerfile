@@ -486,11 +486,6 @@
     }
   },
   {
-    "type": "line_continuation",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "maintainer_instruction",
     "named": true,
     "fields": {}
@@ -1062,10 +1057,6 @@
     "named": false
   },
   {
-    "type": "\\\n",
-    "named": false
-  },
-  {
     "type": "\\ ",
     "named": false
   },
@@ -1091,6 +1082,10 @@
   },
   {
     "type": "heredoc_marker",
+    "named": true
+  },
+  {
+    "type": "line_continuation",
     "named": true
   },
   {
