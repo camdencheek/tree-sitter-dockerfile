@@ -1,7 +1,7 @@
 module.exports = grammar({
   name: "dockerfile",
 
-  extras: ($) => [/\s+/, $.line_continuation],
+  extras: ($) => [/\s+/, $.line_continuation, $.comment],
   externals: ($) => [
     $.heredoc_marker,
     $.heredoc_line,
@@ -11,7 +11,7 @@ module.exports = grammar({
   ],
 
   rules: {
-    source_file: ($) => repeat(seq(choice($._instruction, $.comment), "\n")),
+    source_file: ($) => repeat(seq($._instruction, "\n")),
 
     _instruction: ($) =>
       choice(
@@ -373,12 +373,10 @@ module.exports = grammar({
 
     shell_command: ($) =>
       seq(
-        repeat($._comment_line),
         $.shell_fragment,
         repeat(
           seq(
             alias($.required_line_continuation, $.line_continuation),
-            repeat($._comment_line),
             $.shell_fragment
           )
         )
@@ -407,10 +405,6 @@ module.exports = grammar({
 
     line_continuation: () => /\\[ \t]*\n/,
     required_line_continuation: () => "\\\n",
-
-    _comment_line: ($) => seq(alias($._anon_comment, $.comment), "\n"),
-
-    _anon_comment: () => seq("#", /.*/),
 
     json_string_array: ($) =>
       seq(

@@ -76,11 +76,6 @@
     }
   },
   {
-    "type": "comment",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "copy_instruction",
     "named": true,
     "fields": {},
@@ -676,10 +671,6 @@
       "required": true,
       "types": [
         {
-          "type": "comment",
-          "named": true
-        },
-        {
           "type": "line_continuation",
           "named": true
         },
@@ -753,10 +744,6 @@
         },
         {
           "type": "cmd_instruction",
-          "named": true
-        },
-        {
-          "type": "comment",
           "named": true
         },
         {
@@ -925,10 +912,6 @@
     "named": false
   },
   {
-    "type": "#",
-    "named": false
-  },
-  {
     "type": "$",
     "named": false
   },
@@ -1067,6 +1050,10 @@
   {
     "type": "_heredoc_nl",
     "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
   },
   {
     "type": "escape_sequence",
