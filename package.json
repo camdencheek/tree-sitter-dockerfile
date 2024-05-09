@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-dockerfile",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A tree-sitter module for the Dockerfile grammar",
   "main": "bindings/node",
   "types": "bindings/node",
