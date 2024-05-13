@@ -8,8 +8,7 @@ RUN echo "test"
 
 (source_file
   (run_instruction
-    (shell_command
-      (shell_fragment))))
+    (shell_command)))
 
 ==================
 Shell command multiline
@@ -25,11 +24,8 @@ RUN echo "test" \
 (source_file
   (run_instruction
     (shell_command
-      (shell_fragment)
       (line_continuation)
-      (shell_fragment)
-      (line_continuation)
-      (shell_fragment))))
+      (line_continuation))))
 
 ==================
 Shell command multiline space after continuation
@@ -43,8 +39,7 @@ RUN echo "test" \
 (source_file
   (run_instruction
     (shell_command
-      (shell_fragment
-        (line_continuation)))))
+      (line_continuation))))
 
 ==================
 Run with shell empty array
@@ -91,8 +86,7 @@ run --mount=type=secret,id=aws,target=/root/.aws/credentials \
     (line_continuation)
     (param)
     (line_continuation)
-    (shell_command
-      (shell_fragment))))
+    (shell_command)))
 
 ==================
 Run with heredoc
@@ -107,8 +101,6 @@ EOF
 (source_file
   (run_instruction
     (shell_command
-      (shell_fragment
-        (heredoc_marker)))
+      (heredoc_marker))
     (heredoc_block
-      (heredoc_line)
       (heredoc_end))))
