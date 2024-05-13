@@ -4,9 +4,9 @@ module.exports = grammar({
   extras: ($) => [/\s+/, $.line_continuation, $.comment],
   externals: ($) => [
     $.heredoc_marker,
-    $.heredoc_line,
+    $._heredoc_line,
     $.heredoc_end,
-    $.heredoc_nl,
+    $._heredoc_nl,
     $.error_sentinel,
   ],
 
@@ -210,8 +210,8 @@ module.exports = grammar({
         // \n if there's at least one open heredoc to avoid conflicts.
         // We also alias this token to hide it from the output like all other
         // whitespace.
-        alias($.heredoc_nl, "_heredoc_nl"),
-        repeat(seq($.heredoc_line, "\n")),
+        $._heredoc_nl,
+        repeat(seq($._heredoc_line, "\n")),
         $.heredoc_end
       ),
 
@@ -373,16 +373,16 @@ module.exports = grammar({
 
     shell_command: ($) =>
       seq(
-        $.shell_fragment,
+        $._shell_fragment,
         repeat(
           seq(
             alias($.required_line_continuation, $.line_continuation),
-            $.shell_fragment
+            $._shell_fragment
           )
         )
       ),
 
-    shell_fragment: ($) => repeat1(
+    _shell_fragment: ($) => repeat1(
       choice(
         // A shell fragment is broken into the same tokens as other
         // constructs because the lexer prefers the longer tokens

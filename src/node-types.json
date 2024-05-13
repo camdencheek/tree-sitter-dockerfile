@@ -283,15 +283,11 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "heredoc_end",
-          "named": true
-        },
-        {
-          "type": "heredoc_line",
           "named": true
         }
       ]
@@ -668,29 +664,14 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "line_continuation",
-          "named": true
-        },
-        {
-          "type": "shell_fragment",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "shell_fragment",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "heredoc_marker",
+          "named": true
+        },
+        {
+          "type": "line_continuation",
           "named": true
         }
       ]
@@ -1048,10 +1029,6 @@
     "named": false
   },
   {
-    "type": "_heredoc_nl",
-    "named": false
-  },
-  {
     "type": "comment",
     "named": true
   },
@@ -1061,10 +1038,6 @@
   },
   {
     "type": "heredoc_end",
-    "named": true
-  },
-  {
-    "type": "heredoc_line",
     "named": true
   },
   {
