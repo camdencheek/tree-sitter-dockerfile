@@ -337,8 +337,12 @@ module.exports = grammar({
       seq(
         "--",
         field("name", token.immediate(/[a-z][-a-z]*/)),
-        token.immediate("="),
-        field("value", token.immediate(/[^\s]+/))
+        optional(
+          seq(
+            token.immediate("="),
+            field("value", token.immediate(/[^\s]+/)),
+          )
+        )
       ),
 
     // Specific parsing of the --mount option e.g.
