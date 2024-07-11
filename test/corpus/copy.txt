@@ -53,3 +53,18 @@ COPY --chown=a:b --chmod=644 src dst
     (param)
     (path)
     (path)))
+
+
+==================
+Params without argument
+==================
+
+COPY --link src dst
+
+---
+
+(source_file
+  (copy_instruction
+    (param)
+    (path)
+    (path)))
