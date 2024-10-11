@@ -651,6 +651,42 @@
           "value": "ARG"
         },
         {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "arg_pair"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "required_line_continuation"
+                },
+                "named": true,
+                "value": "line_continuation"
+              },
+              {
+                "type": "REPEAT1",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "arg_pair"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "arg_pair": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "FIELD",
           "name": "name",
           "content": {
@@ -696,11 +732,11 @@
                       }
                     ]
                   }
+                },
+                {
+                  "type": "BLANK"
                 }
               ]
-            },
-            {
-              "type": "BLANK"
             }
           ]
         }
