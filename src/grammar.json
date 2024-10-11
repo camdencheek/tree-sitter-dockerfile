@@ -651,6 +651,13 @@
           "value": "ARG"
         },
         {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\s+"
+          }
+        },
+        {
           "type": "REPEAT1",
           "content": {
             "type": "SYMBOL",
