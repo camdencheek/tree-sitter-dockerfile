@@ -24,23 +24,9 @@
     }
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.21.0",
+    "tree-sitter-cli": "^0.24.0",
     "prebuildify": "^6.0.0"
   },
-  "tree-sitter": [
-    {
-      "file-types": [
-        "Dockerfile",
-        "dockerfile",
-        "docker",
-        "Containerfile",
-        "container"
-      ],
-      "highlights": [
-        "queries/highlights.scm"
-      ]
-    }
-  ],
   "files": [
     "grammar.js",
     "binding.gyp",
