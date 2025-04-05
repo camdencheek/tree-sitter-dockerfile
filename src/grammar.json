@@ -877,13 +877,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "heredoc_nl"
-          },
-          "named": false,
-          "value": "_heredoc_nl"
+          "type": "SYMBOL",
+          "name": "_heredoc_nl"
         },
         {
           "type": "REPEAT",
@@ -892,7 +887,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "heredoc_line"
+                "name": "_heredoc_line"
               },
               {
                 "type": "STRING",
@@ -1585,7 +1580,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "shell_fragment"
+          "name": "_shell_fragment"
         },
         {
           "type": "REPEAT",
@@ -1603,14 +1598,14 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "shell_fragment"
+                "name": "_shell_fragment"
               }
             ]
           }
         }
       ]
     },
-    "shell_fragment": {
+    "_shell_fragment": {
       "type": "REPEAT1",
       "content": {
         "type": "CHOICE",
@@ -1898,7 +1893,7 @@
     },
     "comment": {
       "type": "PATTERN",
-      "value": "#.*"
+      "value": "#.*\\n"
     }
   },
   "extras": [
@@ -1924,7 +1919,7 @@
     },
     {
       "type": "SYMBOL",
-      "name": "heredoc_line"
+      "name": "_heredoc_line"
     },
     {
       "type": "SYMBOL",
@@ -1932,7 +1927,7 @@
     },
     {
       "type": "SYMBOL",
-      "name": "heredoc_nl"
+      "name": "_heredoc_nl"
     },
     {
       "type": "SYMBOL",
@@ -1940,5 +1935,6 @@
     }
   ],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

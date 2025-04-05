@@ -21,11 +21,8 @@ COPY --from=build /dest /dest
     (image_alias))
   (run_instruction
     (shell_command
-      (shell_fragment
-        (heredoc_marker)))
+      (heredoc_marker))
     (heredoc_block
-      (heredoc_line)
-      (heredoc_line)
       (heredoc_end)))
   (from_instruction
     (image_spec
@@ -58,11 +55,8 @@ COPY --from=build /dest /dest
     (image_alias))
   (run_instruction
     (shell_command
-      (shell_fragment
-        (heredoc_marker)))
+      (heredoc_marker))
     (heredoc_block
-      (heredoc_line)
-      (heredoc_line)
       (heredoc_end)))
   (from_instruction
     (image_spec
@@ -100,12 +94,8 @@ COPY --from=build /dest /dest
       (json_string)))
   (run_instruction
     (shell_command
-      (shell_fragment
-        (heredoc_marker)))
+      (heredoc_marker))
     (heredoc_block
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
       (heredoc_end)))
   (from_instruction
     (image_spec
@@ -141,14 +131,8 @@ COPY --from=build /dest /dest
     (image_alias))
   (run_instruction
     (shell_command
-      (shell_fragment
-        (heredoc_marker)))
+      (heredoc_marker))
     (heredoc_block
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
       (heredoc_end)))
   (from_instruction
     (image_spec
@@ -200,36 +184,23 @@ COPY --from=build /dest /
     (path))
   (run_instruction
     (shell_command
-      (shell_fragment
-        (heredoc_marker))
+      (heredoc_marker)
       (line_continuation)
-      (shell_fragment
-        (heredoc_marker)))
+      (heredoc_marker))
     (heredoc_block
-      (heredoc_line)
       (heredoc_end))
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (run_instruction
     (shell_command
-      (shell_fragment
-        (heredoc_marker)
-        (heredoc_marker)
-        (heredoc_marker)))
+      (heredoc_marker)
+      (heredoc_marker)
+      (heredoc_marker))
     (heredoc_block
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
-      (heredoc_line)
       (heredoc_end))
     (heredoc_block
-      (heredoc_line)
       (heredoc_end))
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (from_instruction
     (image_spec
@@ -283,8 +254,7 @@ COPY --from=build /dest /
       (image_name))
     (image_alias))
   (run_instruction
-    (shell_command
-      (shell_fragment)))
+    (shell_command))
   (workdir_instruction
     (path))
   (copy_instruction
@@ -292,7 +262,6 @@ COPY --from=build /dest /
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (copy_instruction
     (path
@@ -301,45 +270,36 @@ COPY --from=build /dest /
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end))
     (heredoc_block
-      (heredoc_line)
+      (heredoc_end)))
+  (run_instruction
+    (shell_command))
+  (copy_instruction
+    (param)
+    (path
+      (heredoc_marker))
+    (path)
+    (heredoc_block
+      (heredoc_end)))
+  (copy_instruction
+    (param)
+    (path
+      (heredoc_marker))
+    (path)
+    (heredoc_block
+      (heredoc_end)))
+  (copy_instruction
+    (param)
+    (path
+      (heredoc_marker))
+    (path)
+    (heredoc_block
       (heredoc_end)))
   (run_instruction
     (shell_command
-      (shell_fragment)))
-  (copy_instruction
-    (param)
-    (path
-      (heredoc_marker))
-    (path)
-    (heredoc_block
-      (heredoc_line)
-      (heredoc_end)))
-  (copy_instruction
-    (param)
-    (path
-      (heredoc_marker))
-    (path)
-    (heredoc_block
-      (heredoc_line)
-      (heredoc_end)))
-  (copy_instruction
-    (param)
-    (path
-      (heredoc_marker))
-    (path)
-    (heredoc_block
-      (heredoc_line)
-      (heredoc_end)))
-  (run_instruction
-    (shell_command
-      (shell_fragment)
       (line_continuation)
-      (shell_fragment)
-      (line_continuation)
-      (shell_fragment)))
+      (line_continuation)))
   (from_instruction
     (image_spec
       (image_name)))
@@ -389,47 +349,40 @@ EOF
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (copy_instruction
     (path
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (copy_instruction
     (path
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (copy_instruction
     (path
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (copy_instruction
     (path
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (copy_instruction
     (path
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end)))
   (copy_instruction
     (path
       (heredoc_marker))
     (path)
     (heredoc_block
-      (heredoc_line)
       (heredoc_end))))
