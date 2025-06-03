@@ -3,7 +3,7 @@ package tree_sitter_dockerfile_test
 import (
 	"testing"
 
-	tree_sitter_dockerfile "github.com/camdencheek/tree-sitter-dockerfile"
+	tree_sitter_dockerfile "github.com/camdencheek/tree-sitter-dockerfile/bindings/go"
 	tree_sitter "github.com/smacker/go-tree-sitter"
 )
 
