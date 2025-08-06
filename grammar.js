@@ -317,7 +317,15 @@ module.exports = grammar({
     image_name: ($) =>
       seq(
         choice(/[^@:\s\$-]/, $.expansion),
-        repeat(choice(token.immediate(/[^@:\s\$]+/), $._immediate_expansion))
+        repeat(
+          choice(
+            // Allow a registry port segment like ":1234" as part of the image name,
+            // but only when it is immediately followed by a slash (i.e., part of the registry before the repo path).
+            token.immediate(/:[0-9]+(?=\/)/),
+            token.immediate(/[^@:\s\$]+/),
+            $._immediate_expansion
+          )
+        )
       ),
 
     image_tag: ($) =>

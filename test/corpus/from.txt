@@ -194,3 +194,18 @@ FROM a AS b $C
     (image_alias
       (expansion
 	(variable)))))
+
+==================
+Registry with port and tag
+==================
+
+FROM dockerregistry.example.com:1234/containeros/rel1:release AS compile-image
+
+---
+
+(source_file
+  (from_instruction
+    (image_spec
+      name: (image_name)
+      tag: (image_tag))
+    as: (image_alias)))
