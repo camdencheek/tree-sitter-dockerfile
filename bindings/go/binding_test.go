@@ -3,8 +3,8 @@ package tree_sitter_dockerfile_test
 import (
 	"testing"
 
-	tree_sitter_dockerfile "github.com/camdencheek/tree-sitter-dockerfile"
-	tree_sitter "github.com/smacker/go-tree-sitter"
+	tree_sitter_dockerfile "github.com/camdencheek/tree-sitter-dockerfile/bindings/go"
+	tree_sitter "github.com/tree-sitter/go-tree-sitter"
 )
 
 func TestCanLoadGrammar(t *testing.T) {
