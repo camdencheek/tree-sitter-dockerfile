@@ -280,8 +280,15 @@ module.exports = grammar({
               choice(
                 $.double_quoted_string,
                 $.single_quoted_string,
-                $.unquoted_string
+                $.unquoted_string,
+                alias($._spaced_env_value, $.unquoted_string)
               ))
+      ),
+
+    _spaced_env_value: ($) =>
+      seq(
+        $.unquoted_string,
+        repeat1(seq($._non_newline_whitespace, $.unquoted_string))
       ),
 
     _env_key: ($) =>

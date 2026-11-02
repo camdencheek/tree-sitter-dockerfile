@@ -1167,6 +1167,40 @@
               {
                 "type": "SYMBOL",
                 "name": "unquoted_string"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_spaced_env_value"
+                },
+                "named": true,
+                "value": "unquoted_string"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "_spaced_env_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "unquoted_string"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_non_newline_whitespace"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "unquoted_string"
               }
             ]
           }
