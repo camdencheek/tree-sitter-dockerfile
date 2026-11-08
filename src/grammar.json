@@ -1692,7 +1692,7 @@
     },
     "line_continuation": {
       "type": "PATTERN",
-      "value": "\\\\[ \\t]*\\r?\\n"
+      "value": "\\\\[ \\t]*\\r*\\n"
     },
     "required_line_continuation": {
       "type": "TOKEN",

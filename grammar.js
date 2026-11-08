@@ -412,7 +412,7 @@ module.exports = grammar({
       )
     ),
 
-    line_continuation: () => /\\[ \t]*\r?\n/,
+    line_continuation: () => /\\[ \t]*\r*\n/,
     required_line_continuation: () => token(prec(1, /\\\r?\n/)),
 
     json_string_array: ($) =>

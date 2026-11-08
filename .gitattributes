@@ -1,5 +1,6 @@
 * text eol=lf
 test/corpus/line_endings.txt -text
+test/corpus/carriage_returns.txt -text
 
 src/*.json linguist-generated
 src/parser.c linguist-generated
