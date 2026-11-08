@@ -8,10 +8,12 @@ module.exports = grammar({
     $.heredoc_end,
     $.heredoc_nl,
     $.error_sentinel,
+    $._eof_instruction_end,
   ],
 
   rules: {
-    source_file: ($) => repeat(seq($._instruction, "\n")),
+    source_file: ($) =>
+      repeat(seq($._instruction, choice("\n", $._eof_instruction_end))),
 
     _instruction: ($) =>
       choice(
@@ -410,8 +412,8 @@ module.exports = grammar({
       )
     ),
 
-    line_continuation: () => /\\[ \t]*\n/,
-    required_line_continuation: () => "\\\n",
+    line_continuation: () => /\\[ \t]*\r?\n/,
+    required_line_continuation: () => token(prec(1, /\\\r?\n/)),
 
     json_string_array: ($) =>
       seq(
