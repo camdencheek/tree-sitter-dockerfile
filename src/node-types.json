@@ -840,6 +840,10 @@
         {
           "type": "expansion",
           "named": true
+        },
+        {
+          "type": "unquoted_string",
+          "named": true
         }
       ]
     }

@@ -1,0 +1,22 @@
+==================
+Line continuation before repeated carriage returns
+==================
+
+FROM alpine
+ENV A=1 \
+    B=2
+
+---
+
+(source_file
+	(from_instruction
+		(image_spec
+			(image_name)))
+	(env_instruction
+		(env_pair
+			(unquoted_string)
+			(unquoted_string))
+		(line_continuation)
+		(env_pair
+			(unquoted_string)
+			(unquoted_string))))

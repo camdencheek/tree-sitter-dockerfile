@@ -21,6 +21,7 @@ enum TokenType {
     HEREDOC_END,
     HEREDOC_NL,
     ERROR_SENTINEL,
+    EOF_INSTRUCTION_END,
 };
 
 void *tree_sitter_dockerfile_external_scanner_create() {
@@ -293,6 +294,13 @@ bool tree_sitter_dockerfile_external_scanner_scan(void *payload, TSLexer *lexer,
         } else {
             return scan_marker(state, lexer);
         }
+    }
+
+    // The last instruction of a file may end at EOF instead of a linebreak.
+    if (valid_symbols[EOF_INSTRUCTION_END] && !state->in_heredoc &&
+        state->heredoc_count == 0 && lexer->eof(lexer)) {
+        lexer->result_symbol = EOF_INSTRUCTION_END;
+        return true;
     }
 
     // HEREDOC_NL only matches a linebreak if there are open heredocs. This is
